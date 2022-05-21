@@ -1,0 +1,4 @@
+#useful link https://github.com/Canonical-LLC/current-jpg-store-contracts.git. (jpeg store setup example)
+
+https://jfischoff.github.io/blog/making-nfts-with-plutus.html nft creation
+

@@ -1,0 +1,57 @@
+--CARDANO(making api)
+
+Have Daedalus and plugin wallet ready
+
+--next Mac OS binaries
+mkdir -p ~/.local/bin, all my files are in this path
+downloaded all the mac binaries and put them in that dir
+from https://hydra.iohk.io/build/12106182/download/1/cardano-node-1.33.0-macos.tar.gz
+and put this config file in there too https://raw.githubusercontent.com/input-output-hk/cardano-node/master/cardano-submit-api/config/tx-submit-mainnet-config.yaml
+i had to set permissions on them after that
+xattr -d com.apple.quarantine *
+xattr -d com.apple.quarantine configuration/*
+in my ~/.zshrc file, i added this:
+export CARDANO_NODE_SOCKET_PATH=~/Library/Application\ Support/Daedalus\ Mainnet/cardano-node.socket
+i added this line after it
+export PATH="$HOME/.local/bin/:$PATH"
+opened a new iterm or terminal tab to get all the settings loaded and then ran this
+cardano-submit-api --mainnet --socket-path $CARDANO_NODE_SOCKET_PATH --config ~/.local/bin/tx-submit-mainnet-config.txt --port 8090
+
+**mine  cardano-submit-api --mainnet --socket-path $CARDANO_NODE_SOCKET_PATH --config ~/.local/bin/tx-submit-mainnet-config.yaml --port 8090
+
+
+
+oh you don't have wget installed, ok we'll try curl
+curl -O https://raw.githubusercontent.com/input-output-hk/cardano-node/master/cardano-submit-api/config/tx-submit-mainnet-config.yaml
+
+Text editor-- now enter
+
+in my ~/.zshrc file, i added this:
+export CARDANO_NODE_SOCKET_PATH=~/Library/Application\ Support/Daedalus\ Mainnet/cardano-node.socket
+i added this line after it
+export PATH="$HOME/.local/bin/:$PATH"
+save and close the file
+
+#export CARDANO_NODE_SOCKET_PATH=~/Library/Application\ Support/Daedalus\ Mainnet/cardano-node.socket
+export PATH="$HOME/.local/bin/:$PATH"  save n quit
+
+In terminal ... source ~/.zshrc
+source tells the terminal to read those settings
+
+cardano-submit-api to see if it is available to us
+
+perfect
+
+cardano-submit-api --mainnet --socket-path $CARDANO_NODE_SOCKET_PATH --config ~/.local/bin/tx-submit-mainnet-config.yaml --port 8090
+
+
+
+(Moving api files**)
+
+gary — 01/25/2022
+cd ~/Downloads/cardano[TAB] (hit tab key not type [TAB])
+it should type out cardano-node-whatever for you
+should end up in ~/Downloads/cardano-node-1.33.0-macos
+
+there's all your files
+cp -R * ~/.local/bin  copy all the files from here to that local bin dir

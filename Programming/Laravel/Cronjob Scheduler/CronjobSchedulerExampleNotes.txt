@@ -1,0 +1,50 @@
+a cronjob is just a job that runs on a schedule. usually every X minutes, etc.
+
+pre req. a)tinkerwell b)laravel
+
+1) open tinkerwell
+
+2)
+
+$api = 'https://server.jpgstoreapis.com/policy/a51b52822dc9fec24c00a110d3ef509b799b06436872714ca4d4a942/listings?page=1';
+
+Http::get($api)->json()a;
+
+
+
+paste that and press CMD + R to run it
+
+(so what you just did was use the jpg.store api to fetch the recent 100 supervirus listings)
+(if you change the word "listings" to "sales" you will fetch the sales instead)
+
+ok let's do something else, i only want to see supervirus listings where the price is 12 ada or less (inside tinkerwell)
+
+$json = Http::get($api)->json();
+collect($json)
+    ->filter(function($item){
+        return $item['price_lovelace'] < 12 * 1000000;
+    });
+
+these are all laravel helpers and methods
+http::get() = super easy to fetch remote apis with the http client
+collect() = excellent way of handling arrays/objects without writing a bunch of similar code
+
+the mechanism that alerts me is an mac command
+
+$phrase = 'Testing';
+$title = 'Notice!';
+$cmd = sprintf('osascript -e \'display notification "%s" with title "%s"\'', $phrase, $title);
+shell_exec($cmd);
+
+you can CMD T to open a new tab in Tinkerwell
+paste those lines and run it
+
+optional* pushover.net
+
+----------------------------------------------------------
+
+$api = 'https://pool.pm/wallet/addr1q96pl4zda0hkn550y68muhhar096l2awuf0ey0lxze8w3g4phwzrdqmmk6335x5t48f3vj6ask4a36hj5cc0vs93epfs22mkhj';
+$json = Http::get($api)->json();
+
+that uses pool.pm to fetch a wallet address, and display its data
+

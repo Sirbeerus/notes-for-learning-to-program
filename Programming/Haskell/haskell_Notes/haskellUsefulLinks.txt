@@ -1,0 +1,4 @@
+https://github.com/lk-geimfari/awesomo/blob/master/languages/HASKELL.md(projectsInHaskell)
+https://youtu.be/YNvFOCwS4tE(Introduction)
+https://media.ed.ac.uk/channel/INF1A%3A+Introduction+to+Computation+%5B2020_2021%5D/179956591(compilation)
+https://youtu.be/fg24wrRKE8g(MaybeDatatype)

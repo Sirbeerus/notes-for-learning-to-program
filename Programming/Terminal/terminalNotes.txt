@@ -1,0 +1,47 @@
+-- terminal (shows ada price)
+
+Artisan::command('ada', function () {
+    echo Http::get('https://pool.pm/total.json')->json('ADAUSD');
+});
+
+--------------------------------------------------------------------------------------
+--terminal (remove directories)
+
+using Finder is safer, but if you really want to delete from terminal, rm is what you want
+rm filename
+rm -fr dirname
+rm -r (recursive)
+
+mistakes with "find" are safe, unless you use the -delete flag, this is why we always confirm first, delete after
+--------------------------------------------------------------------------------------
+--terminal (yes)
+cd ~/Sites/ada
+--------------------------------------------------------------------------------------
+--terminal (CARDANO API)
+cardano-submit-api --mainnet --socket-path $CARDANO_NODE_SOCKET_PATH --config ~/.local/bin/tx-submit-mainnet-config.yaml --port 8090
+ -------------------------------------------------------------------------------------------
+
+--terminal (cardano CLI)
+cardano-cli --version
+cardano-cli - - help
+-------------------------------------------------------------------------------------------
+--terminal (nix)
+nix repl     - - inside fresh Mac terminal
+:?
+
+-------------------------------------------------------------------------------------------
+--TERMINAL(rename a file)
+This example renames example.txt to file.txt:
+
+$ mv example.txt file.txt
+
+Because they both use the same command, you can combine rename with a move. For instance, when moving example.txt to Documents, you could also rename it:
+
+$ mv example.txt ~/Documents/file.txt
+
+---
+pbcopy   (copy in terminal)
+----
+
+
+---------------------------------------------------------------------------------------

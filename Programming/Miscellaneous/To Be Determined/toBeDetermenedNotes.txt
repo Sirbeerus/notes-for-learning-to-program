@@ -1,0 +1,15 @@
+1)https://github.com/lk-geimfari/awesomo/blob/master/languages/HASKELL.md
+some "awesome" haskell packages and libraries you could learn from and use
+Sirbeerus — 02/01/2022
+I'll look into thank you
+gary — 02/01/2022
+was looking at postgrest which could be useful when building an api
+
+2)creates a new dir, Cloning into 'plutus-pioneer-program'
+ls plutus-pioneer-program
+cd plutus-pioneer-program - change dir into the plutus code dir
+ls - list files
+add "learn git basics" and "learn command-line basics, zsh" to your learning list! lol
+there's a lot of experience you'll gain just by doing it every day
+
+3)https://jfischoff.github.io/blog/making-nfts-with-plutus.html nft creation

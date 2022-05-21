@@ -1,0 +1,2 @@
+https://plutus-pioneer-program.readthedocs.io/en/latest/pioneer/week1.html
+https://cardano.stackexchange.com/
