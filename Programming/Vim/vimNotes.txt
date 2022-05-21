@@ -1,0 +1,20 @@
+--vim (command mode configurations)
+Syntax highlighting is very useful. The next line we add will enable syntax highlighting and make your code easier to read.
+
+" Turn syntax highlighting on.
+:syntax on (command mode)
+
+You can also choose to display line numbers to make navigating the file easier.
+
+" Add numbers to each line on the left-hand side.
+:set number (command mode)
+
+:set spell spelllang=en_us (command mode)
+
+
+
+-----------------------------------------------
+
+--vimrc configuration file
+vi ~/.vimrc
+Just open the file as shown, then add the syntax on statement somewhere in the file.
