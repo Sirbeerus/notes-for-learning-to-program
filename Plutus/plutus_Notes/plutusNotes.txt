@@ -1,0 +1,18 @@
+
+**installation pre req. for plutus   ->       brew install cabal
+
+--> which cabal
+
+cardano-cli --help will bring up the menu
+
+
+------------------------------------------------------
+
+--plutus
+
+A 'Contract' that logs a message.
+
+hello :: Contract () EmptySchema T.Text ()
+hello = logInfo @String "Hello, world"
+
+----------------------------------------------------
