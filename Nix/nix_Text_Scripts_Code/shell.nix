@@ -14,4 +14,4 @@ in pkgs.mkShell {
 	echo "Welcome to my awesome shell";
 	'';
 
-nix-shell. 	
+nix-shell

@@ -13,3 +13,12 @@ add "learn git basics" and "learn command-line basics, zsh" to your learning lis
 there's a lot of experience you'll gain just by doing it every day
 
 3)https://jfischoff.github.io/blog/making-nfts-with-plutus.html nft creation
+
+______________________
+https://github.com/renzwo/cardano-plutus-apps-install-m1
+
+https://github.com/alessandrokonrad/Pi-Pool
+
+https://github.com/abracadaniel/cardano-pool-docker
+
+"https://www.coingecko.com/coins/list"

@@ -1,3 +1,4 @@
+ssh nicholas@144.202.109.99 (abundantsolutions.dev)
 
 ls -la(shows hidden files)
 
@@ -5,33 +6,6 @@ ls -la(shows hidden files)
 
 ssh -vvv root@1.2.3.4 (packet errors)
 
-
-
-
-
-
---SSH(mac22 info, 4096 encryption)
-
-
-Your identification has been saved in /Users/sirbeerus/.ssh/id_rsa.
-Your public key has been saved in /Users/sirbeerus/.ssh/id_rsa.pub.
-The key fingerprint is:
-SHA256:+APkafmy+Y30cZZe7a+fBDPX+duNO3YliJs7bdh+dWQ N.J.Childs
-The key's randomart image is:
-+---[RSA 4096]----+
-|                 |
-|                 |
-|      .          |
-|     o +        E|
-|      B S  . = =.|
-|     . +  . ..*.=|
-|      . = .*+ .+=|
-|       = ===+.=o*|
-|      o.o +=oo+OB|
-+----[SHA256]-----+
-
---SSH(mac22 pubkey 4096)
-ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDVQCVozrqkjcItatzxmk6gQAUnnnr07ltSuUlWUhzHh7Tc9DD+gD/phoWo3n8Fbay847bYKYP/WuLurzMijyMoN2cqHkTCPUVlubzByZ/4tDOs7B1slEhmh4lec6O8ACCLes44Ds9pmooE1bjCoKN5ioCfDBqtsDDxWS3V3lC+bUlXkiZ9IKS4Ny8fpCuUPPjYX4yW7ovQUVzUwiRklHo45S1Egp8BdQKk/NJqKY1an186MBHpYg2iNhLbc28Ah03GMTaFp73lGtT7nskn/xQ07t4BPcDvuy2N7zT37OzVWBwvzUg5GF17DwgD2QNxQvzzTH0s7hwF9j0fds5CM7QbVj6O4yh0HKpnOtdncpeQuZ4xvYVMwCBzwBmgNKN12kNoqp1QUD2gLCheYvVl3zDcrGt0pZ9Hj23JmxhCQzw7S10WQabALIffDiZ6rnFs20I4QMxKUfyeXhSyDpmcY+loviSHEhk1zRtES16PZtCI8XDnKLRT7sLqd390JIbeI6mXJkfw3qNaBV6i8fb6KRQc+VyK6LY2QEjWXc1tHGFSACHabxh2MqHkjlqlA3w5ukLsz5QWdkrAzkXjE6eev14mkcaQB9bHicvbDcKJqMws/yajRiFaKI3IOIodI/opCyNKenbTl+oQ//AA6l18/vOHOdBb4NtQN1SCs2CW6rzEzw== N.J.Childs
 
 
 
@@ -59,25 +33,29 @@ It's interesting how everyone forgets to mention that u need to run ( *** ssh-ad
 
 SSH --(ed25519 ssh key, mac 22)
 
-Your identification has been saved in /Users/sirbeerus/.ssh/id_ed25519.
-Your public key has been saved in /Users/sirbeerus/.ssh/id_ed25519.pub.
-The key fingerprint is:
-SHA256:Nu9uXKSKtG56U28O7bHTr4zhqRKGFIn3C363TfvWi6I sirbeerus@gmail.com
-The key's randomart image is:
-+--[ED25519 256]--+
-|   . .           |
-|  . +            |
-|   . o           |
-|    o .     .    |
-|   o o .S  o     |
-|    o *.o+o .    |
-|     + *.B=+ .   |
-|      B o=XBo..  |
-|    .=.oEBX==oo. |
-+----[SHA256]-----+
+ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMWlVea1LXelh0wvPreRefsDWGHl//HRVxmVcdEgensO nixholas@sirbeerus@gmail.com
 
---SSH(mac22 pubkey ed25519)
+-----------------------------------------------------------------------		
 
-ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHFJpiTn85fuGorij3S511z8OIfFJY9fp7h036F0D6oK sirbeerus@gmail.com
+Login via SSH (optional)
+
+If you prefer SSH instead of the Vultr Web Console, it's possible to temporarily authorize a SSH key for the nixos account during the installation by adding it to /home/nixos/.ssh/authorized_keys.
+
+If you have your public SSH key uploaded to GitHub, for example, you can do the following:
+
+$ mkdir ~/.ssh
+$ curl -L https://github.com/<username>.keys >~/.ssh/authorized_keys
+
+Log in via SSH as the nixos user.
 
 
+
+
+
+
+
+
+
+
+
+A

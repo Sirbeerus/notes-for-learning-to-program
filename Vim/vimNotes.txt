@@ -11,6 +11,15 @@ You can also choose to display line numbers to make navigating the file easier.
 
 :set spell spelllang=en_us (command mode)
 
+:set relativenumber
+:set mouse=a (use mouse)
+:colorscheme
+:set autoindent
+
+ctrl r   (redo)
+
+v (visual mode) y (yanking/copy) p (pasting)
+
 
 
 -----------------------------------------------
@@ -18,3 +27,19 @@ You can also choose to display line numbers to make navigating the file easier.
 --vimrc configuration file
 vi ~/.vimrc
 Just open the file as shown, then add the syntax on statement somewhere in the file.
+
+____________________________
+
+When you start Vim, it first processes your .vimrc file, and then it scans all directories in ~/.vim for plugins contained in pack/*/start.
+
+By default, your ~/.vim directory (if you even have one) has no such file structure, so set that up with:
+
+$ mkdir -p ~/.vim/pack/vendor/start
+Now you can place Vim plugins in ~/.vim/pack/vendor/start, and they'll automatically load when you launch Vim.
+
+____________________________
+/s z=   (spelling errors)
+
+-----------------------------
+
+There's persistent undo option in vim, :h persistent-undo

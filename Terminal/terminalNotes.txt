@@ -47,3 +47,7 @@ pbcopy   (copy in terminal)
 
 
 ---------------------------------------------------------------------------------------
+
+on my vps i would use "wget" probably
+[5:49 PM]
+or apt-get install

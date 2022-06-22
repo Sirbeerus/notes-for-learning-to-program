@@ -50,3 +50,5 @@ so pool is providing us with some good info here
 }
 we can always grab that file if we need to know the conversion rates, how many tokens are listed, how many policies, etc..
 oh and the load averages
+--------------
+it can be useful to think in terms of using GET for retrieving / viewing information and POST for creating / editing information.

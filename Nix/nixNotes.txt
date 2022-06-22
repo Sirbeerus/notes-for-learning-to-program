@@ -1,3 +1,5 @@
+/etc/nix/nix.conf
+(sysconfdir/nix/nix.conf)
 nix --help
     Warning: This program is experimental and its interface is subject to change.
 
@@ -64,3 +66,58 @@ Examples
 ----------------------------------------------------------------------------------------------
 
 In your repo, run nix flake init to generate the flake.nix file. Then run git add flake.nix to add it to the git staging area, otherwise nix will not recognize that the file exists. 
+
+----------------------------------------------
+
+Configuration
+stack.yaml contains a nix: section with Nix settings. Without this section, Nix will not be used.
+
+ put the following in your nix.conf:
+
+
+experimental-features = nix-command flakes
+
+Here is a commented configuration file, showing the default values:
+
+nix:
+
+  # false by default. Must be present and set to `true` to enable Nix, except on
+  # NixOS where it is enabled by default (see #3938).  You can set set it in your
+  # `$HOME/.stack/config.yaml` to enable Nix for all your projects without having
+  # to repeat it
+  # enable: true
+
+  # true by default. Tells Nix whether to run in a pure shell or not.
+  pure: true
+
+  # Empty by default. The list of packages you want to be
+  # available in the nix-shell at build time (with `stack
+  # build`) and run time (with `stack exec`).
+  packages: []
+
+  # Unset by default. You cannot set this option if `packages:`
+  # is already present and not empty.
+  shell-file: shell.nix
+
+  # A list of strings, empty by default. Additional options that
+  # will be passed verbatim to the `nix-shell` command.
+  nix-shell-options: []
+
+  # A list of strings, empty by default, such as
+  # `[nixpkgs=/my/local/nixpkgs/clone]` that will be used to override
+  # NIX_PATH.
+  path: []
+
+  # false by default. Whether to add your nix dependencies as nix garbage
+  # collection roots. This way, calling nix-collect-garbage will not remove
+  # those packages from the nix store, saving you some time when running
+  # stack build again with nix support activated.
+  # This creates a `nix-gc-symlinks` directory in the project `.stack-work`.
+  # To revert that, just delete this `nix-gc-symlinks` directory.
+  add-gc-roots: false
+
+----------------------------------------------
+Original config (sudo vim /etc/nix/nix.conf) 
+
+substituters = https://cache.nixos.org https://hydra.iohk.io
+  4 trusted-public-keys = iohk.cachix.org-1:DpRUyj7h7V830dp/i6Nti+NEO2/nhblbov/8    MW7Rqoo= hydra.iohk.io:f/Ea+s+dFdN+3Y/G+FDgSq+a5NEWhJGzdjvKNGv0/EQ= cache.ni    xos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY=
