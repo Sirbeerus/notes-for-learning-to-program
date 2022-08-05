@@ -15,7 +15,12 @@ rm -fr dirname
 rm -r (recursive)
 
 mistakes with "find" are safe, unless you use the -delete flag, this is why we always confirm first, delete after
---------------------------------------------------------------------------------------
+---------------------------------------------------------------TERMINAL
+
+ls -la  shows . files
+ls -ltrh  shows file size
+
+------------------------
 --terminal (yes)
 cd ~/Sites/ada
 --------------------------------------------------------------------------------------
@@ -43,6 +48,8 @@ $ mv example.txt ~/Documents/file.txt
 
 ---
 pbcopy   (copy in terminal)
+
+BSD (open source license)
 ----
 
 

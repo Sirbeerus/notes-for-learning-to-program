@@ -1,8 +1,5 @@
 1)https://github.com/lk-geimfari/awesomo/blob/master/languages/HASKELL.md
-some "awesome" haskell packages and libraries you could learn from and use
-Sirbeerus — 02/01/2022
-I'll look into thank you
-gary — 02/01/2022
+some "awesome" haskell packages and libraries you could learn from 
 was looking at postgrest which could be useful when building an api
 
 2)creates a new dir, Cloning into 'plutus-pioneer-program'
@@ -22,3 +19,7 @@ https://github.com/alessandrokonrad/Pi-Pool
 https://github.com/abracadaniel/cardano-pool-docker
 
 "https://www.coingecko.com/coins/list"
+
+---------
+
+good question, i'm not sure.  i installed dropbox and turned on the thing it has that moves your screenshots into dropbox/screenshots
