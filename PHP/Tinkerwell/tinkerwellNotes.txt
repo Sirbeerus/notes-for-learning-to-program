@@ -14,7 +14,7 @@ Http::get('https://pool.pm/total.json')->json('ADAUSD');
 open tinkerwell settings, and point the default path to your ~/Sites/ada path
 settings > advanced > default folder
 select your ada path
-
+/Applications/Tinkerwell.app/Contents/MacOS
 preferences
 layout: horizontal
 you can change themes, fonts, sizes, etc.. whenever you want to
