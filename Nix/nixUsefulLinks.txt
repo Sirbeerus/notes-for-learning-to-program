@@ -1,3 +1,0 @@
-https://nixcloud.io/tour/?id=1
-
-https://stackoverflow.com/questions/51929461/how-to-uninstall-nix#51935794 (uninstall)

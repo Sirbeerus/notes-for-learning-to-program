@@ -1,1 +1,0 @@
-https://jaspervdj.be/hakyll/tutorials/01-installation.html

@@ -101,4 +101,11 @@ most github repos will still have a "master" branch
 if you start using main, that replaces the master branch
 [10:41 PM]
 when someone refers to master branch, if you're using 'main', that's what you would use
+----------------------------
+rm -fr .git (remove git follow on a folder)
+
+git submodule update
+
+git status
+
 
