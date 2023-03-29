@@ -1,3 +1,115 @@
+{-# LANGUAGE OverloadedStrings #-}
+
+module Main where
+
+import Web.Spock
+import Web.Spock.Config
+
+type Server a = SpockM () () () a
+
+app :: Server ()
+app = do
+  get root $ do
+    html $ mconcat [ "<!DOCTYPE html>"
+                   , "<html>"
+                   , "<head>"
+                   , "<meta charset='UTF-8'>"
+		   , "<title>abundantsolutions.dev</title>"
+                   , "</head>"
+                   , "<h1>Sirbeerus Grotto</h1>"
+                   , "<body style=background-color:#4682B4;"
+                   , "<p style='color:white;'>Hello World. Lambda! Digging in Haskell. Join us on Discord? </p>"
+                   , "<a style=color:#DEB887; href='https://discord.gg/D5YpU4YWVH'>https://discord.gg/D5YpU4YWVH</a>"
+
+                   , "<svg width=100 height=100>"
+                   , "<circle cx=50 cy=50 r=40 stroke=green stroke-width=4 fill=yellow />"
+                   , "</svg>"
+
+                   , "</body>"
+                   , "</html>"
+                   ]
+
+
+main :: IO ()
+main = do
+  cfg <- defaultSpockCfg () PCNoDatabase ()
+  runSpock 80 (spock cfg app)
+
+
++++++++++++++++++++++++++++++++++++++++++++++++
+
+{-# LANGUAGE OverloadedStrings #-}
+
+module Main where
+
+import Web.Spock
+import Web.Spock.Config
+
+type Server a = SpockM () () () a
+
+app :: Server ()
+app = do
+  get root $ do
+    html $ mconcat [ "<!DOCTYPE html>"
+                   , "<html>"
+                   , "<head>"
+                   , "<meta charset='UTF-8'>"
+		   , "<title>abundantsolutions.dev</title>"
+                   , "</head>"
+                   , "<h1>Sirbeerus Grotto</h1>"
+                   , "<body style=background-color:#4682B4;"
+                   , "<p style='color:white;'>Hello World. Lambda! Digging in Haskell. Join us on Discord? </p>"
+                   , "<a style=color:#DEB887; href='https://discord.gg/D5YpU4YWVH'>https://discord.gg/D5YpU4YWVH</a>"
+                   , "</body>"
+                   , "</html>"
+                   ]
+
+
+main :: IO ()
+main = do
+  cfg <- defaultSpockCfg () PCNoDatabase ()
+  runSpock 80 (spock cfg app)
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+
+{-# LANGUAGE OverloadedStrings #-}
+
+module Main where
+
+import Web.Spock
+import Web.Spock.Config
+
+type Server a = SpockM () () () a
+
+app :: Server ()
+app = get root (text "Hello World. Lambda! Digging in Haskell. Join us on Discord? https://discord.gg/YSnJrN9wwe ")
+
+
+main :: IO ()
+main = do
+  cfg <- defaultSpockCfg () PCNoDatabase ()
+  runSpock 80 (spock cfg app)
+
+------------------------------
+
+app :: Server ()
+app = do
+  get root $ do
+    html $ mconcat [ "<!DOCTYPE html>"
+                   , "<html>"
+                   , "<head>"
+                   , "<title>My Haskell Spock App</title>"
+                   , "</head>"
+                   , "<body>"
+                   , "<h1>Hello World. Lambda! Digging in Haskell. Join us on Discord? <a href='https://discord.gg/YSnJrN9wwe'>https://discord.gg/YSnJrN9wwe</a></h1>"
+                   , "</body>"
+                   , "</html>"
+                   ]
+
+
+
+
+
 ssh sirbeerus@84.46.248.127
 ssh -lroot -p22 84.46.248.127
 
