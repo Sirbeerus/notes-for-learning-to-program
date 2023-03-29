@@ -13,16 +13,25 @@ https://status.nixos.org/  --specify version
 
 #-}
 
-https://srid.ca/haskell-nix
-https://rycee.gitlab.io/home-manager/
-https://lambdablob.com/posts/nix-haskell-programming-environment/
-https://www.haskellforall.com/2022/08/incrementally-package-haskell-program.html?m=1
-https://manpages.ubuntu.com/manpages/bionic/man1/ghc-pkg.1.html
---------------------------------------
+https://srid.ca/haskell-nix
+
+https://rycee.gitlab.io/home-manager/
+
+https://lambdablob.com/posts/nix-haskell-programming-environment/
+
+
+https://www.haskellforall.com/2022/08/incrementally-package-haskell-program.html?m=1
+
+
+https://manpages.ubuntu.com/manpages/bionic/man1/ghc-pkg.1.html
+
+
+--------------------------------------
 https://search.nixos.org/packages
 
 Your use of Home Manager is centered around the configuration file, which is typically found at ~/.config/nixpkgs/home.nix.
-nix-repl> builtins.currentSystem
+
+nix-repl> builtins.currentSystem
 "x86_64-darwin" 
 
 /etc/nix/nix.conf
@@ -39,7 +48,9 @@ nix-env -qaP   #search a packages
 
 nix-env -q     #list of installed packages
 
-nix-env -q     #query currently installed packages via nix-envnix-env -u     #upgrade all installed packages
+nix-env -q     #query currently installed packages via nix-env
+
+nix-env -u     #upgrade all installed packages
 
 nix upgrade-nix  #upgrade Nix to the stable version declared in Nixpkgs
  -------------------------------------------------------------
@@ -96,18 +107,28 @@ nix flake update to generate flake.lock file.
 
 The release.nix files in this repository are the Nix analog of a stack.yaml file
 
-Upgrade all packages: nix-env -u
-
-If you have installed Nix before but have not updated it for a while, you should update it with:
+Upgrade all packages: nix-env -u
 
-nix-channel --updatechange in nix.conf
+
+
+If you have installed Nix before but have not updated it for a while, you should update it with:
+
+
+nix-channel --update
+
+
+
+change in nix.conf
 
 sudo launchctl stop org.nixos.nix-daemon
 
 sudo launchctl start org.nixos.nix-daemon
-
-Uninstall
-$ nix-env --uninstall hello
+
+
+Uninstall
+
+$ nix-env --uninstall hello
+
 uninstalling 'hello-2.10'
 
 
@@ -121,24 +142,46 @@ You can also add the allowUnfree = true setting to nix.conf to allow the use of 
 
 --------------------------------------
 
-{-# LANGUAGE DeriveGeneric      #-}
----------------------------------------
---nix flake
-$ nix shell nixpkgs#scala-cli
-$ nix develop # loads the environment
-
-$ scala-cli version
-Scala CLI version: 0.1.16
-Scala version (default): 3.2.0----------------------------------------------------------------------------------
-
-nix-shell --packages 'ghc.withPackages (pkgs: [ pkgs.mtl pkgs.MemoTrie pkgs.containers pkgs.pretty-show ])' -p haskell-language-server  -p ghcid -p haskellPackages.wreq -p haskellPackages.lens -p haskellPackages.aeson
-
-nix-shell --packages 'ghc.withPackages (pkgs: [ pkgs.mtl pkgs.MemoTrie pkgs.containers pkgs.pretty-show ])' -p haskell-language-server  -
-p ghcid -p haskellPackages.wreq -p haskellPackages.lens -p haskellPackages.aeson -p zlib
-
-nix-shell  -p haskell-language-server ghcid haskellPackages.wreq haskellPackages.lens haskellPackages.aeson haskellPackages.zlib haskellPackages.aeson ghc cabal2nix haskellPackages.lens-aeson haskellPackages.lens-aeson_1_2_2
-
-nix-shell --packages 'ghc.withPackages (pkgs: [ pkgs.mtl pkgs.MemoTrie pkgs.containers pkgs.pretty-show ])' -p haskell-language-server ghcid haskellPackages.wreq haskellPackages.lens haskellPackages.aeson haskellPackages.zlib haskellPackages.aeson ghc cabal2nix haskellPackages.lens-aeson haskellPackages.lens-aeson_1_2_2 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@Fresh nix install/vps
+{-# LANGUAGE DeriveGeneric      #-}
+
+---------------------------------------
+
+--nix flake
+
+$ nix shell nixpkgs#scala-cli
+
+$ nix develop # loads the environment
+
+
+
+$ scala-cli version
+
+Scala CLI version: 0.1.16
+
+Scala version (default): 3.2.0
+
+----------------------------------------------------------------------------------
+
+
+nix-shell --packages 'ghc.withPackages (pkgs: [ pkgs.mtl pkgs.MemoTrie pkgs.containers pkgs.pretty-show ])' -p haskell-language-server  -p ghcid -p haskellPackages.wreq -p haskellPackages.lens -p haskellPackages.aeson
+
+
+
+nix-shell --packages 'ghc.withPackages (pkgs: [ pkgs.mtl pkgs.MemoTrie pkgs.containers pkgs.pretty-show ])' -p haskell-language-server  -
+
+p ghcid -p haskellPackages.wreq -p haskellPackages.lens -p haskellPackages.aeson -p zlib
+
+
+
+nix-shell  -p haskell-language-server ghcid haskellPackages.wreq haskellPackages.lens haskellPackages.aeson haskellPackages.zlib haskellPackages.aeson ghc cabal2nix haskellPackages.lens-aeson haskellPackages.lens-aeson_1_2_2
+
+
+
+nix-shell --packages 'ghc.withPackages (pkgs: [ pkgs.mtl pkgs.MemoTrie pkgs.containers pkgs.pretty-show ])' -p haskell-language-server ghcid haskellPackages.wreq haskellPackages.lens haskellPackages.aeson haskellPackages.zlib haskellPackages.aeson ghc cabal2nix haskellPackages.lens-aeson haskellPackages.lens-aeson_1_2_2 
+
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+Fresh nix install/vps
 
 df -ha  #check persistent storage
 htop  #check RAM
@@ -216,7 +259,8 @@ Connect to database with psql -d postgres (by default, postgres database is crea
 At the end, make sure to stop database with pg_ctl -D .data stop when leaving the nix shell.
 
 
-@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
 --------------------------------------------------------------------------------------
 
 {
@@ -255,6 +299,7 @@ At the end, make sure to stop database with pg_ctl -D .data stop when leaving th
 
 ##################################################################
 
+touch flake.nix   git init    git add .     nix develop
 
 {
   description = "My Nix application";
@@ -291,8 +336,61 @@ At the end, make sure to stop database with pg_ctl -D .data stop when leaving th
 
 
 
+nix-shell -p ghc niv cabal-install
 
-#this below works
+
+touch shell.nix
+
+let
+  sources = import ./nix/sources.nix;
+  pkgs = import sources.nixpkgs {};
+in
+with pkgs;
+pkgs.mkShell {
+
+  name = "DiagramsShell";
+
+  buildInputs = [
+
+    cabal-install
+    direnv
+    ghc
+    ghcid
+    hlint
+    haskellPackages.haskell-language-server
+    haskellPackages.cabal2nix
+    stylish-haskell
+    bash
+    haskellPackages.zlib
+    haskellPackages.diagrams
+    vim
+    nixops
+    curl
+    jq
+    haskellPackages.shelly
+    haskellPackages.niv
+    haskellPackages.shelly-extra
+    trash-cli
+    haskellPackages.JuicyPixels
+    haskellPackages.hfsevents
+    compcert
+    haskellPackages.bytestring
+
+
+  ];
+
+  shellHook = ''
+
+  '';
+}
+
+
+
+
+
+
+
+flake.nix
 
 
 {
@@ -332,7 +430,8 @@ At the end, make sure to stop database with pg_ctl -D .data stop when leaving th
 
 
 
----------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------
+
 
 shell.nix with direnv
 
@@ -343,467 +442,1135 @@ The next time your launch your terminal and enter the top-level of your project 
 
 
 
-------‐----------------------------
-
-And it’s possible to specify Nix-shell as an interpreter for a file with a shebang at the top of the file:
-
-#! /usr/bin/env nix-shell
-#! nix-shell -i real-interpreter -p packages...
-
-And it’s possible to specify Nix-shell as an interpreter for a file with a shebang at the top of the file:
-
-nix-shell --run "node ./index.js".
-
-#! /usr/bin/env nix-shell
-#! nix-shell -i real-interpreter -p packages...
-
-#!/usr/bin/env
-
-nix-env -u (update installed packages via nix-env)
-nix-env -q (query currently installed packages via nix-env)
-
---------------------------------------------------------------------------------------
-
-# minimal ~/abundant-solutions-dev/shell.nix file
-let
-  myNixPkgs = import <nixpkgs> {};
-in
-myNixPkgs.mkShell {
-  nativeBuildInputs = with myNixPkgs; [
-    cabal-install  # terminal app cabal
-    ghc  # Haskell compiler
-    ghcid
-    haskell-language-server
-    haskellPackages.hlint
-  ];
-}
-
--------‐----------------------------------------------------------------------------
-
-# minimal ~/abundant-solutions-dev/shell.nix file
-let
-  myNixPkgs = import <nixpkgs> {};
-in
-myNixPkgs.mkShell {
-  nativeBuildInputs = with myNixPkgs; [
-    cabal-install  # terminal app cabal
-    ghc  # Haskell compiler
-    haskellPackages.hakyll  # static haskell site generator
-    cabal2nix  
-    haskell-language-server  
-    haskellPackages.zlib 
-    zlib  
-    haskellPackages.aeson 
-    haskellPackages.lens-aeson_1_2_2 
-    haskellPackages.wreq  
-    haskellPackages.lens 
-
-  ];
-}
--------------------------------------------------------------------------
-
-{ pkgs ? import <nixpkgs> { } }:
-pkgs.mkShell {
-  name = "MyAwesomeShell";
-  buildInputs = with pkgs ; [
-   figlet
-  ];
-
-  shellHook = ''
-    echo "Welcome to my awesome shell!" | figlet ;
-  '' ;
-}
-
-
-
-------------------------------------------------------------
-
-Scaffolding
-The following work with stack.yaml and cabal.project based projects.
-
-Add default.nix:
-
-
-let
-  # Read in the Niv sources
-  sources = import ./nix/sources.nix {};
-  # If ./nix/sources.nix file is not found run:
-  #   niv init
-  #   niv add input-output-hk/haskell.nix -n haskellNix
-
-  # Fetch the haskell.nix commit we have pinned with Niv
-  haskellNix = import sources.haskellNix {};
-  # If haskellNix is not found run:
-  #   niv add input-output-hk/haskell.nix -n haskellNix
-
-  # Import nixpkgs and pass the haskell.nix provided nixpkgsArgs
-  pkgs = import
-    # haskell.nix provides access to the nixpkgs pins which are used by our CI,
-    # hence you will be more likely to get cache hits when using these.
-    # But you can also just use your own, e.g. '<nixpkgs>'.
-    haskellNix.sources.nixpkgs-unstable
-    # These arguments passed to nixpkgs, include some patches and also
-    # the haskell.nix functionality itself as an overlay.
-    haskellNix.nixpkgsArgs;
-in pkgs.haskell-nix.project {
-  # 'cleanGit' cleans a source directory based on the files known by git
-  src = pkgs.haskell-nix.haskellLib.cleanGit {
-    name = "haskell-nix-project";
-    src = ./.;
-  };
-  # Specify the GHC version to use.
-  compiler-nix-name = "ghc924"; # Not required for `stack.yaml` based projects.
-}
-
-
-
-
-
-
-Add shell.nix:
-
-(import ./default.nix).shellFor {
-  tools = {
-    cabal = "latest";
-    hlint = "latest";
-    haskell-language-server = "latest";
-  };
-}
-
-
--------------------------------------------------------------
-how to use flake.nix files from nixpkgs
-
-1. Ensure you have Nix installed.
-
-2. Get the Nixpkgs repository, either via git or by downloading the archive.
-
-3. Navigate to the folder containing the flake.nix file you want to use.
-
-4. Run `nix flake update` to get the latest version of the flake.nix file.
-
-5. Run `nix flake show-inputs --all` to get a list of all the inputs required by the flake.nix file.
-
-6. Set up any additional inputs required in your configuration.nix file.
-
-7. Run `nix build -f flake.nix <target>` to build the target you specified.
----------------------------------------------------------------------------
-
-nix --help
-    Warning: This program is experimental and its interface is subject to change.
-
-Name
-
-    nix - a tool for reproducible and declarative configuration management
-
-Synopsis
-
-nix [option...] subcommand
-
-where subcommand is one of the following:
-
-
-· nix build - build a derivation or fetch a store path 
-· nix develop - run a bash shell that provides the build environment of a derivation 
-· nix flake - manage Nix flakes 
-· nix help - show help about nix or a particular subcommand 
-· nix profile - manage Nix profiles 
-· nix repl - start an interactive environment for evaluating Nix expressions 
-· nix run - run a Nix application 
-· nix search - search for packages 
-· nix shell - run a shell in which the specified packages are available 
-
-Infrequently used commands:
-
-· nix bundle - bundle an application so that it works outside of the Nix store 
-· nix copy - copy paths between Nix stores 
-· nix edit - open the Nix expression of a Nix package in $EDITOR 
-· nix eval - evaluate a Nix expression 
-· nix log - show the build log of the specified packages or paths, if available 
-· nix path-info - query information about store paths 
-· nix registry - manage the flake registry 
-· nix why-depends - show why a package has another package in its closure 
-
-Utility/scripting commands:
-
-· nix daemon - daemon to perform store operations on behalf of non-root clients 
-· nix describe-stores - show registered store types and their available options 
-· nix hash - compute and convert cryptographic hashes 
-· nix key - generate and convert Nix signing keys 
-· nix nar - create or inspect NAR files 
-· nix print-dev-env - print shell code that can be sourced by bash to reproduce the build environment of a derivation 
-    · nix realisation - manipulate a Nix realisation 
-    · nix show-config - show the Nix configuration 
-    · nix show-derivation - show the contents of a store derivation 
-    · nix store - manipulate a Nix store 
-
-    Commands for upgrading or troubleshooting your Nix installation:
-
-    · nix doctor - check your system for potential problems and print a PASS or FAIL for each check 
-    · nix upgrade-nix - upgrade Nix to the latest stable version 
-
-Examples
-
-    · Create a new flake:
-
-          | # nix flake new hello
-          | # cd hello
-
-    · Build the flake in the current directory:
-
------------------------------------------------------------------------------------------------- NIX FLAKES
-
-In your repo, run nix flake init to generate the flake.nix file. Then run git add flake.nix to add it to the git staging area, otherwise nix will not recognize that the file exists. 
-
-
-
---------------------------------
-
-… and tools like ghcid and haskell-language-server will also work within this shell, too. The only difference is that ghcid now takes no arguments, since it will auto-detect the cabal project in the current directory:
-
-
-
------------------
-
-need to make a change to a person’s project is to clone their repository, run:
-
-$ cabal2nix --shell . > shell.nix
-$ nix-shell
-
-------------------
-/etc/nix/nix.conf
-(sysconfdir/nix/nix.conf)
-------------------------------------------------------------------
-
-# nix flake update
-# nix build
-
-nix develop
-
------------------------------------------
-
-# dafault.nix (Generic)
----------------------------
-
-# default.nix
-let
-  pkgs = import <nixpkgs> { };
-in
-  pkgs.haskellPackages.developPackage {
-    root = ./.;
-    modifier = drv:
-      pkgs.haskell.lib.addBuildTools drv (with pkgs.haskellPackages;
-        [ cabal-install
-          ghcid
-        ]);
-  }
-
-
----------------------------------------------------------
-
-
-
-https://github.com/mhwombat/nix-for-numbskulls/blob/78bcc186f79931c0e4a1e445e2f6b1f12f6d46be/Haskell/ss-haskell-dev.md
-
-
-Use Nix to get GHC, cabal, and system deps. Then use cabal to download and build all Haskell dependencies:
-
-$ nix-shell -p haskell.compiler.ghc8104 -p cabal-instal -p zlib # zlib here is the system library, not the Haskell package
-$ cabal build
-------------------------------------------------------------------
-
-INITIALIZING OUR PROJECT WITH NIX
-$nix-shell --packages ghc cabal-install --run "cabal init"
-
-
-CONVERTING TO NIX
-$nix-shell --packages cabal2nix --run "cabal2nix ." > default.nix
-At the top-level of your project run:
+------‐----------------------------
+
+
+
+And it’s possible to specify Nix-shell as an interpreter for a file with a shebang at the top of the file:
+
+
+
+#! /usr/bin/env nix-shell
+
+#! nix-shell -i real-interpreter -p packages...
+
+
+
+And it’s possible to specify Nix-shell as an interpreter for a file with a shebang at the top of the file:
+
+
+
+nix-shell --run "node ./index.js".
+
+
+
+#! /usr/bin/env nix-shell
+
+#! nix-shell -i real-interpreter -p packages...
+
+
+
+#!/usr/bin/env
+
+
+
+nix-env -u (update installed packages via nix-env)
+
+nix-env -q (query currently installed packages via nix-env)
+
+
+
+--------------------------------------------------------------------------------------
+
+
+
+# minimal ~/abundant-solutions-dev/shell.nix file
+
+let
+
+  myNixPkgs = import <nixpkgs> {};
+
+in
+
+myNixPkgs.mkShell {
+
+  nativeBuildInputs = with myNixPkgs; [
+
+    cabal-install  # terminal app cabal
+
+    ghc  # Haskell compiler
+
+    ghcid
+
+    haskell-language-server
+
+    haskellPackages.hlint
+
+  ];
+
+}
+
+
+
+-------‐----------------------------------------------------------------------------
+
+
+
+# minimal ~/abundant-solutions-dev/shell.nix file
+
+let
+
+  myNixPkgs = import <nixpkgs> {};
+
+in
+
+myNixPkgs.mkShell {
+
+  nativeBuildInputs = with myNixPkgs; [
+
+    cabal-install  # terminal app cabal
+
+    ghc  # Haskell compiler
+
+    haskellPackages.hakyll  # static haskell site generator
+
+    cabal2nix  
+
+    haskell-language-server  
+
+    haskellPackages.zlib 
+
+    zlib  
+
+    haskellPackages.aeson 
+
+    haskellPackages.lens-aeson_1_2_2 
+
+    haskellPackages.wreq  
+
+    haskellPackages.lens 
+
+
+
+  ];
+
+}
+
+-------------------------------------------------------------------------
+
+
+
+{ pkgs ? import <nixpkgs> { } }:
+
+pkgs.mkShell {
+
+  name = "MyAwesomeShell";
+
+  buildInputs = with pkgs ; [
+
+   figlet
+
+  ];
+
+
+
+  shellHook = ''
+
+    echo "Welcome to my awesome shell!" | figlet ;
+
+  '' ;
+
+}
+
+
+
+
+
+
+
+------------------------------------------------------------
+
+
+
+Scaffolding
+
+The following work with stack.yaml and cabal.project based projects.
+
+
+
+Add default.nix:
+
+
+
+
+
+let
+
+  # Read in the Niv sources
+
+  sources = import ./nix/sources.nix {};
+
+  # If ./nix/sources.nix file is not found run:
+
+  #   niv init
+
+  #   niv add input-output-hk/haskell.nix -n haskellNix
+
+
+
+  # Fetch the haskell.nix commit we have pinned with Niv
+
+  haskellNix = import sources.haskellNix {};
+
+  # If haskellNix is not found run:
+
+  #   niv add input-output-hk/haskell.nix -n haskellNix
+
+
+
+  # Import nixpkgs and pass the haskell.nix provided nixpkgsArgs
+
+  pkgs = import
+
+    # haskell.nix provides access to the nixpkgs pins which are used by our CI,
+
+    # hence you will be more likely to get cache hits when using these.
+
+    # But you can also just use your own, e.g. '<nixpkgs>'.
+
+    haskellNix.sources.nixpkgs-unstable
+
+    # These arguments passed to nixpkgs, include some patches and also
+
+    # the haskell.nix functionality itself as an overlay.
+
+    haskellNix.nixpkgsArgs;
+
+in pkgs.haskell-nix.project {
+
+  # 'cleanGit' cleans a source directory based on the files known by git
+
+  src = pkgs.haskell-nix.haskellLib.cleanGit {
+
+    name = "haskell-nix-project";
+
+    src = ./.;
+
+  };
+
+  # Specify the GHC version to use.
+
+  compiler-nix-name = "ghc924"; # Not required for `stack.yaml` based projects.
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+Add shell.nix:
+
+
+
+(import ./default.nix).shellFor {
+
+  tools = {
+
+    cabal = "latest";
+
+    hlint = "latest";
+
+    haskell-language-server = "latest";
+
+  };
+
+}
+
+
+
+
+
+-------------------------------------------------------------
+
+how to use flake.nix files from nixpkgs
+
+
+
+1. Ensure you have Nix installed.
+
+
+
+2. Get the Nixpkgs repository, either via git or by downloading the archive.
+
+
+
+3. Navigate to the folder containing the flake.nix file you want to use.
+
+
+
+4. Run `nix flake update` to get the latest version of the flake.nix file.
+
+
+
+5. Run `nix flake show-inputs --all` to get a list of all the inputs required by the flake.nix file.
+
+
+
+6. Set up any additional inputs required in your configuration.nix file.
+
+
+
+7. Run `nix build -f flake.nix <target>` to build the target you specified.
+
+---------------------------------------------------------------------------
+
+
+
+nix --help
+
+    Warning: This program is experimental and its interface is subject to change.
+
+
+
+
+Name
+
+
+
+    nix - a tool for reproducible and declarative configuration management
+
+
+
+
+Synopsis
+
+
+
+nix [option...] subcommand
+
+
+
+
+where subcommand is one of the following:
+
+
+
+
+
+
+· nix build - build a derivation or fetch a store path 
+
+
+· nix develop - run a bash shell that provides the build environment of a derivation 
+
+
+· nix flake - manage Nix flakes 
+
+
+· nix help - show help about nix or a particular subcommand 
+
+
+· nix profile - manage Nix profiles 
+
+
+· nix repl - start an interactive environment for evaluating Nix expressions 
+
+
+· nix run - run a Nix application 
+
+
+· nix search - search for packages 
+
+
+· nix shell - run a shell in which the specified packages are available 
+
+
+
+
+Infrequently used commands:
+
+
+
+
+· nix bundle - bundle an application so that it works outside of the Nix store 
+
+
+· nix copy - copy paths between Nix stores 
+
+
+· nix edit - open the Nix expression of a Nix package in $EDITOR 
+
+
+· nix eval - evaluate a Nix expression 
+
+
+· nix log - show the build log of the specified packages or paths, if available 
+
+
+· nix path-info - query information about store paths 
+
+
+· nix registry - manage the flake registry 
+
+
+· nix why-depends - show why a package has another package in its closure 
+
+
+
+
+Utility/scripting commands:
+
+
+
+
+· nix daemon - daemon to perform store operations on behalf of non-root clients 
+
+
+· nix describe-stores - show registered store types and their available options 
+
+
+· nix hash - compute and convert cryptographic hashes 
+
+
+· nix key - generate and convert Nix signing keys 
+
+
+· nix nar - create or inspect NAR files 
+
+
+· nix print-dev-env - print shell code that can be sourced by bash to reproduce the build environment of a derivation 
+
+
+    · nix realisation - manipulate a Nix realisation 
+
+
+    · nix show-config - show the Nix configuration 
+
+
+    · nix show-derivation - show the contents of a store derivation 
+
+
+    · nix store - manipulate a Nix store 
+
+
+
+
+    Commands for upgrading or troubleshooting your Nix installation:
+
+
+
+
+    · nix doctor - check your system for potential problems and print a PASS or FAIL for each check 
+
+    · nix upgrade-nix - upgrade Nix to the latest stable version 
+
+
+
+Examples
+
+
+
+
+    · Create a new flake:
+
+
+
+
+          | # nix flake new hello
+
+
+          | # cd hello
+
+
+
+
+    · Build the flake in the current directory:
+
+
+
+
+----------------------------------------------------------------------------------------------
+-- NIX FLAKES
+
+
+
+In your repo, run nix flake init to generate the flake.nix file. Then run git add flake.nix to add it to the git staging area, otherwise nix will not recognize that the file exists. 
+
+
+
+
+
+
+
+--------------------------------
+
+
+
+… and tools like ghcid and haskell-language-server will also work within this shell, too. The only difference is that ghcid now takes no arguments, since it will auto-detect the cabal project in the current directory:
+
+
+
+
+
+
+
+
+-----------------
+
+
+
+
+need to make a change to a person’s project is to clone their repository, run:
+
+
+
+
+
+$ cabal2nix --shell . > shell.nix
+
+
+$ nix-shell
+
+
+
+------------------
+
+/etc/nix/nix.conf
+
+(sysconfdir/nix/nix.conf)
+
+------------------------------------------------------------------
+
+
+
+# nix flake update
+
+# nix build
+
+
+
+nix develop
+
+
+
+-----------------------------------------
+
+
+
+# dafault.nix (Generic)
+
+---------------------------
+
+
+
+# default.nix
+
+let
+
+  pkgs = import <nixpkgs> { };
+
+in
+
+  pkgs.haskellPackages.developPackage {
+
+    root = ./.;
+
+    modifier = drv:
+
+      pkgs.haskell.lib.addBuildTools drv (with pkgs.haskellPackages;
+
+        [ cabal-install
+
+          ghcid
+
+        ]);
+
+  }
+
+
+
+
+
+---------------------------------------------------------
+
+
+
+
+
+
+
+
+https://github.com/mhwombat/nix-for-numbskulls/blob/78bcc186f79931c0e4a1e445e2f6b1f12f6d46be/Haskell/ss-haskell-dev.md
+
+
+
+
+
+
+Use Nix to get GHC, cabal, and system deps. Then use cabal to download and build all Haskell dependencies:
+
+
+
+
+$ nix-shell -p haskell.compiler.ghc8104 -p cabal-instal -p zlib # zlib here is the system library, not the Haskell package
+
+
+$ cabal build
+
+
+------------------------------------------------------------------
+
+
+
+
+INITIALIZING OUR PROJECT WITH NIX
+
+
+$nix-shell --packages ghc cabal-install --run "cabal init"
+
+
+
+
+
+
+CONVERTING TO NIX
+
+
+$nix-shell --packages cabal2nix --run "cabal2nix ." > default.nix
+
+
+
+At the top-level of your project run:
 
 echo "use nix" > .envrc && direnv allow
 The next time your launch your terminal and enter the top-level of your project direnv will check for changes.
----------------------------------------------------------------------
-*Inside default.nix
-
-The first line contains the three "inputs" to our expression. Of these, base is our only Haskell dependency. Then mkDerivation is a Nix function we can use to make our derivation expression. Finally, there's this stdenv dependency. This is a special input telling Nix we have a standard Linux environment.
-
-We can't build from this file just yet. Instead, we'll make another file release.nix. This file contains, again, a single Nix expression. We use an imported function haskellPackages.callPackage to call our previous file.
-
-
---touch release.nix
-
-
-let
- pkgs = import <nixpkgs> { };
-in
- pkgs.haskellPackages.callPackage ./default.nix { }
-
-
-
-
-We don't provide any parameters for right now, so we'll leave the empty braces there. For a production project, you would use this file to "pin" the nix packages to a particular channel. But we don't need to do that right now.
-
-We can now build our program using the nix-build command and the new release file:
-
-$ nix-build release.nix
-Building the project puts the results in a result directory at your project root. So we can then run our simple binary!
-
-
-$ ./result/bin/MyNixProject
-Hello, Haskell!
-In your repo, run nix flake init to generate the flake.nix file. Then run git add flake.nix to add it to the git staging area, otherwise nix will not recognize that the file exists. 
-
-----------------------------------------------
-
-Configuration
-stack.yaml contains a nix: section with Nix settings. Without this section, Nix will not be used.
-
- put the following in your nix.conf:
-
-
-experimental-features = nix-command flakes
-
-Here is a commented configuration file, showing the default values:
-
-nix:
-
-  # false by default. Must be present and set to `true` to enable Nix, except on
-  # NixOS where it is enabled by default (see #3938).  You can set set it in your
-  # `$HOME/.stack/config.yaml` to enable Nix for all your projects without having
-  # to repeat it
-  # enable: true
-
-  # true by default. Tells Nix whether to run in a pure shell or not.
-  pure: true
-
-  # Empty by default. The list of packages you want to be
-  # available in the nix-shell at build time (with `stack
-  # build`) and run time (with `stack exec`).
-  packages: []
-
-  # Unset by default. You cannot set this option if `packages:`
-  # is already present and not empty.
-  shell-file: shell.nix
-
-  # A list of strings, empty by default. Additional options that
-  # will be passed verbatim to the `nix-shell` command.
-  nix-shell-options: []
-
-  # A list of strings, empty by default, such as
-  # `[nixpkgs=/my/local/nixpkgs/clone]` that will be used to override
-  # NIX_PATH.
-  path: []
-
-  # false by default. Whether to add your nix dependencies as nix garbage
-  # collection roots. This way, calling nix-collect-garbage will not remove
-  # those packages from the nix store, saving you some time when running
-  # stack build again with nix support activated.
-  # This creates a `nix-gc-symlinks` directory in the project `.stack-work`.
-  # To revert that, just delete this `nix-gc-symlinks` directory.
-  add-gc-roots: false
-
-----------------------------------------------
-Original config (sudo vim /etc/nix/nix.conf) 
-
-substituters = https://cache.nixos.org https://hydra.iohk.io
-  4 trusted-public-keys = iohk.cachix.org-1:DpRUyj7h7V830dp/i6Nti+NEO2/nhblbov/8    MW7Rqoo= hydra.iohk.io:f/Ea+s+dFdN+3Y/G+FDgSq+a5NEWhJGzdjvKNGv0/EQ= cache.ni    xos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY=
-
--------------------------------------------------------
-
-TRYING OUT FLAKES
-Flakes are currently implemented in an experimental branch of Nix. If you want to play with flakes, you can get this version of Nix from Nixpkgs:
-
-$ nix-shell -I nixpkgs=channel:nixos-21.05 --packages nixUnstable
-
--------------------------------------------------------
-‐‐ search nix for packages
-
-nix-env -qaP <nixpkg, hello, cowsay, etc..>
-
----------------------------‐----------------------------
-
-Getting started with flakes
-
-Scaffolding
-
-The following work with stack.yaml and cabal.project based projects.
-
-Add flake.nix:
-
-{
-  description = "A very basic flake";
-  inputs.haskellNix.url = "github:input-output-hk/haskell.nix";
-  inputs.nixpkgs.follows = "haskellNix/nixpkgs-unstable";
-  inputs.flake-utils.url = "github:numtide/flake-utils";
-  outputs = { self, nixpkgs, flake-utils, haskellNix }:
-    flake-utils.lib.eachSystem [ "x86_64-linux" "x86_64-darwin" ] (system:
-    let
-      overlays = [ haskellNix.overlay
-        (final: prev: {
-          # This overlay adds our project to pkgs
-          helloProject =
-            final.haskell-nix.project' {
-              src = ./.;
-              compiler-nix-name = "ghc924";
-              # This is used by `nix develop .` to open a shell for use with
-              # `cabal`, `hlint` and `haskell-language-server`
-              shell.tools = {
-                cabal = {};
-                hlint = {};
-                haskell-language-server = {};
-              };
-              # Non-Haskell shell tools go here
-              shell.buildInputs = with pkgs; [
-                nixpkgs-fmt
-              ];
-              # This adds `js-unknown-ghcjs-cabal` to the shell.
-              # shell.crossPlatforms = p: [p.ghcjs];
-            };
-        })
-      ];
-      pkgs = import nixpkgs { inherit system overlays; inherit (haskellNix) config; };
-      flake = pkgs.helloProject.flake {
-        # This adds support for `nix build .#js-unknown-ghcjs:hello:exe:hello`
-        # crossPlatforms = p: [p.ghcjs];
-      };
-    in flake // {
-      # Built by `nix build .`
-      packages.default = flake.packages."hello:exe:hello";
-    });
-}
-
-    Note: Git dependencies
-
-    If you have git dependencies in your project, you'll need to calculate sha256 hashes for them.
-
-Working with a project
-
-Top-level attributes are Haskell packages (incl. dependencies) part of your project.
-
-To build the library component of a package in the project run:
-
-nix build .#your-package-name:lib:your-package-name
-
-There are also other components such as exe, test and benchmark. To build an executable:
-
-nix build .#your-package-name:exe:your-exe-name
-
-To use the devShell provided by the flake run:
-
-nix develop .
-cabal repl your-package-name:lib:your-package-name
-cabal build your-package-name
-
-To open a shell for use with stack
-
--------------
-The most popular way of building Haskell applications with Nix is cabal2nix. It extracts dependency information from your project’s cabal file and uses the nixpkgs haskellPackages collection to resolve those dependencies.
-
-To add it to your existing Haskell application, do:
-
-nix flake init -t github:serokell/templates#haskell-cabal2nix 
-
-It will create a flake.nix similar to this (note the throw <...> replacement for a name; write the name of your project there).
-
-
-
+
+---------------------------------------------------------------------
+*Inside default.nix
+
+
+
+
+The first line contains the three "inputs" to our expression. Of these, base is our only Haskell dependency. Then mkDerivation is a Nix function we can use to make our derivation expression. Finally, there's this stdenv dependency. This is a special input telling Nix we have a standard Linux environment.
+
+
+
+
+We can't build from this file just yet. Instead, we'll make another file release.nix. This file contains, again, a single Nix expression. We use an imported function haskellPackages.callPackage to call our previous file.
+
+
+
+
+
+--touch release.nix
+
+
+
+
+
+let
+
+
+ pkgs = import <nixpkgs> { };
+
+
+in
+
+
+ pkgs.haskellPackages.callPackage ./default.nix { }
+
+
+
+
+
+
+
+
+
+
+We don't provide any parameters for right now, so we'll leave the empty braces there. For a production project, you would use this file to "pin" the nix packages to a particular channel. But we don't need to do that right now.
+
+
+
+
+We can now build our program using the nix-build command and the new release file:
+
+
+
+
+$ nix-build release.nix
+
+
+Building the project puts the results in a result directory at your project root. So we can then run our simple binary!
+
+
+
+
+
+
+$ ./result/bin/MyNixProject
+
+
+Hello, Haskell!
+
+
+
+In your repo, run nix flake init to generate the flake.nix file. Then run git add flake.nix to add it to the git staging area, otherwise nix will not recognize that the file exists. 
+
+
+
+
+
+----------------------------------------------
+
+
+
+
+Configuration
+
+
+stack.yaml contains a nix: section with Nix settings. Without this section, Nix will not be used.
+
+
+
+
+ put the following in your nix.conf:
+
+
+
+
+
+
+experimental-features = nix-command flakes
+
+
+
+
+Here is a commented configuration file, showing the default values:
+
+
+
+
+nix:
+
+
+
+
+  # false by default. Must be present and set to `true` to enable Nix, except on
+
+
+  # NixOS where it is enabled by default (see #3938).  You can set set it in your
+
+
+  # `$HOME/.stack/config.yaml` to enable Nix for all your projects without having
+
+
+  # to repeat it
+
+
+  # enable: true
+
+
+
+
+  # true by default. Tells Nix whether to run in a pure shell or not.
+
+
+  pure: true
+
+
+
+
+  # Empty by default. The list of packages you want to be
+
+
+  # available in the nix-shell at build time (with `stack
+
+
+  # build`) and run time (with `stack exec`).
+
+
+  packages: []
+
+
+
+
+  # Unset by default. You cannot set this option if `packages:`
+
+
+  # is already present and not empty.
+
+
+  shell-file: shell.nix
+
+
+
+
+  # A list of strings, empty by default. Additional options that
+
+
+  # will be passed verbatim to the `nix-shell` command.
+
+
+  nix-shell-options: []
+
+
+
+
+  # A list of strings, empty by default, such as
+
+
+  # `[nixpkgs=/my/local/nixpkgs/clone]` that will be used to override
+
+
+  # NIX_PATH.
+
+
+  path: []
+
+
+
+
+  # false by default. Whether to add your nix dependencies as nix garbage
+
+
+  # collection roots. This way, calling nix-collect-garbage will not remove
+
+
+  # those packages from the nix store, saving you some time when running
+
+
+  # stack build again with nix support activated.
+
+
+  # This creates a `nix-gc-symlinks` directory in the project `.stack-work`.
+
+
+  # To revert that, just delete this `nix-gc-symlinks` directory.
+
+
+  add-gc-roots: false
+
+
+
+
+----------------------------------------------
+
+
+Original config (sudo vim /etc/nix/nix.conf) 
+
+
+
+
+substituters = https://cache.nixos.org https://hydra.iohk.io
+
+
+  4 trusted-public-keys = iohk.cachix.org-1:DpRUyj7h7V830dp/i6Nti+NEO2/nhblbov/8    MW7Rqoo= hydra.iohk.io:f/Ea+s+dFdN+3Y/G+FDgSq+a5NEWhJGzdjvKNGv0/EQ= cache.ni    xos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY=
+
+
+
+
+-------------------------------------------------------
+
+
+
+
+TRYING OUT FLAKES
+
+
+Flakes are currently implemented in an experimental branch of Nix. If you want to play with flakes, you can get this version of Nix from Nixpkgs:
+
+
+
+
+
+$ nix-shell -I nixpkgs=channel:nixos-21.05 --packages nixUnstable
+
+
+
+
+
+-------------------------------------------------------
+
+
+‐‐ search nix for packages
+
+
+
+
+
+nix-env -qaP <nixpkg, hello, cowsay, etc..>
+
+
+
+
+
+---------------------------‐----------------------------
+
+
+
+
+
+Getting started with flakes
+
+
+
+
+
+Scaffolding
+
+
+
+
+
+The following work with stack.yaml and cabal.project based projects.
+
+
+
+
+
+Add flake.nix:
+
+
+
+
+
+{
+
+
+  description = "A very basic flake";
+
+
+  inputs.haskellNix.url = "github:input-output-hk/haskell.nix";
+
+
+  inputs.nixpkgs.follows = "haskellNix/nixpkgs-unstable";
+
+
+  inputs.flake-utils.url = "github:numtide/flake-utils";
+
+
+  outputs = { self, nixpkgs, flake-utils, haskellNix }:
+
+
+    flake-utils.lib.eachSystem [ "x86_64-linux" "x86_64-darwin" ] (system:
+
+
+    let
+
+
+      overlays = [ haskellNix.overlay
+
+
+        (final: prev: {
+
+
+          # This overlay adds our project to pkgs
+
+
+          helloProject =
+
+
+            final.haskell-nix.project' {
+
+
+              src = ./.;
+
+
+              compiler-nix-name = "ghc924";
+
+
+              # This is used by `nix develop .` to open a shell for use with
+
+
+              # `cabal`, `hlint` and `haskell-language-server`
+
+
+              shell.tools = {
+
+
+                cabal = {};
+
+
+                hlint = {};
+
+
+                haskell-language-server = {};
+
+
+              };
+
+
+              # Non-Haskell shell tools go here
+
+
+              shell.buildInputs = with pkgs; [
+
+
+                nixpkgs-fmt
+
+
+              ];
+
+
+              # This adds `js-unknown-ghcjs-cabal` to the shell.
+
+
+              # shell.crossPlatforms = p: [p.ghcjs];
+
+
+            };
+
+
+        })
+
+
+      ];
+
+
+      pkgs = import nixpkgs { inherit system overlays; inherit (haskellNix) config; };
+
+
+      flake = pkgs.helloProject.flake {
+
+
+        # This adds support for `nix build .#js-unknown-ghcjs:hello:exe:hello`
+
+
+        # crossPlatforms = p: [p.ghcjs];
+
+
+      };
+
+
+    in flake // {
+
+
+      # Built by `nix build .`
+
+
+      packages.default = flake.packages."hello:exe:hello";
+
+
+    });
+
+
+}
+
+
+
+
+
+    Note: Git dependencies
+
+
+
+
+
+    If you have git dependencies in your project, you'll need to calculate sha256 hashes for them.
+
+
+
+
+
+Working with a project
+
+
+
+
+
+Top-level attributes are Haskell packages (incl. dependencies) part of your project.
+
+
+
+
+
+To build the library component of a package in the project run:
+
+
+
+
+
+nix build .#your-package-name:lib:your-package-name
+
+
+
+
+
+There are also other components such as exe, test and benchmark. To build an executable:
+
+
+
+
+
+nix build .#your-package-name:exe:your-exe-name
+
+
+
+
+
+To use the devShell provided by the flake run:
+
+
+
+
+
+nix develop .
+
+
+cabal repl your-package-name:lib:your-package-name
+
+
+cabal build your-package-name
+
+
+
+
+
+To open a shell for use with stack
+
+
+
+
+
+-------------
+
+
+The most popular way of building Haskell applications with Nix is cabal2nix. It extracts dependency information from your project’s cabal file and uses the nixpkgs haskellPackages collection to resolve those dependencies.
+
+
+
+
+
+To add it to your existing Haskell application, do:
+
+
+
+
+
+nix flake init -t github:serokell/templates#haskell-cabal2nix 
+
+
+
+
+
+It will create a flake.nix similar to this (note the throw <...> replacement for a name; write the name of your project there).
+
+
+
+
+
+
+
+
+
+
+
