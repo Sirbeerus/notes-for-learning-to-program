@@ -1,0 +1,30 @@
+https://webinstall.dev/vim-nerdtree/
+
+install:
+curl -sS https://webi.sh/vim-nerdtree | sh
+
+This installer also includes a few reasonable defaults from the project's README:
+
+Key	Action
+Global Key Bindings	
+<Leader>n	Move cursor to NERDTree
+<ctrl>+t
+or <Leader>t	Toggle NERDTree window on/off
+<ctrl>+f
+or <Leader>f	Move to current file in NERDTree
+NERDTree Window Bindings	
+o	Open a directory to reveal children
+x	Close directory and go to parent
+shift+o	Open directory and all children dirs, recursively
+shift+x	Close all child directories, recursively
+p	Go to parent directory
+gt	Go to next Tab (gT for previous, naturally)
+/	Search matches of visible files
+(use shift+o first to see all)
+Normal Vim Stuff	
+ctrl+w, w	Rotate between open windows
+:e **/api.js<tab>	Open and edit file matching api.js, in any subfolder
+(if you've installed vim-leader then <Leader> is Space)
+
+
+

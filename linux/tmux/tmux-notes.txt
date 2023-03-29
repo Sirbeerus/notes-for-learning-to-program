@@ -1,1 +1,16 @@
+<tmux> to enter tmux server
+
 tmux new -s <name of new sessions>
+
+tmux new-session -s <name of new sessions> (updated preferred naming command)
+
+
+tmux attach -t <name of session>
+
+To detach from the tmux session and keep it running in the background, you can press the keys ctrl + b then d. This will detach from the session and keep it running in the background.
+
+tmux list-sessions
+
+This will list all the sessions including those that are detached.
+
+tmux kill-session -t <name of session>

@@ -1,0 +1,74 @@
+{
+    "HTTP": {
+        "branch": "master",
+        "description": "Haskell HTTP package",
+        "homepage": "http://hackage.haskell.org/package/HTTP",
+        "owner": "haskell",
+        "repo": "HTTP",
+        "rev": "785331d7ddc6a1d0932d608c8f703a651f150460",
+        "sha256": "0z9v4xp0ysdq3sm3zrs96b62gc54a61p4ndnbvdzfmj51fzmk25a",
+        "type": "tarball",
+        "url": "https://github.com/haskell/HTTP/archive/785331d7ddc6a1d0932d608c8f703a651f150460.tar.gz",
+        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
+    },
+    "aeson": {
+        "branch": "master",
+        "description": "A fast Haskell JSON library",
+        "homepage": "",
+        "owner": "haskell",
+        "repo": "aeson",
+        "rev": "15eea5901ba3898cae86364e85cc807a0f6d5a7b",
+        "sha256": "07y2xmr98dgmxdd0mqigwmmqpr51r8022ia3p1nypqjcqhm7gp5s",
+        "type": "tarball",
+        "url": "https://github.com/haskell/aeson/archive/15eea5901ba3898cae86364e85cc807a0f6d5a7b.tar.gz",
+        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
+    },
+    "hedis": {
+        "branch": "master",
+        "description": "A Redis client library for Haskell.",
+        "homepage": "http://hackage.haskell.org/package/hedis",
+        "owner": "informatikr",
+        "repo": "hedis",
+        "rev": "25777dca19b7fd0543c4c1939a5eb65af41bd585",
+        "sha256": "1yww1v84yrysrsg902b2d5c1hhmfma2az4frkfgckj1mkmynmjyf",
+        "type": "tarball",
+        "url": "https://github.com/informatikr/hedis/archive/25777dca19b7fd0543c4c1939a5eb65af41bd585.tar.gz",
+        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
+    },
+    "nixpkgs": {
+        "branch": "master",
+        "description": "Nix Packages collection",
+        "homepage": "",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "b9866fc0cfe37c78b1b46f2a4210469006879331",
+        "sha256": "1z4m10sd46cmn6yagfw8v4nlyzyyly0hyfj280b9ch4qhwm9i549",
+        "type": "tarball",
+        "url": "https://github.com/NixOS/nixpkgs/archive/b9866fc0cfe37c78b1b46f2a4210469006879331.tar.gz",
+        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
+    },
+    "redis": {
+        "branch": "master",
+        "description": "Redis Cache  With PHP ",
+        "homepage": null,
+        "owner": "ganesh-patil",
+        "repo": "redis",
+        "rev": "509074f67bfccb90fe0c07f983786d585005b029",
+        "sha256": "1q7rh2zgiw68fr8x4vzginfgv05dal4rs0w00100m9h3c06y29r9",
+        "type": "tarball",
+        "url": "https://github.com/ganesh-patil/redis/archive/509074f67bfccb90fe0c07f983786d585005b029.tar.gz",
+        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
+    },
+    "wreq": {
+        "branch": "master",
+        "description": null,
+        "homepage": null,
+        "owner": "bos",
+        "repo": "wreq",
+        "rev": "2da0070625a680d5af59e36c3ca253ef6a80aea9",
+        "sha256": "1zdxpcs9hrjl5s9czd7y4hkqm2mn8gwcaha61r0crcgs8qj3sqfs",
+        "type": "tarball",
+        "url": "https://github.com/bos/wreq/archive/2da0070625a680d5af59e36c3ca253ef6a80aea9.tar.gz",
+        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
+    }
+}

@@ -1,0 +1,26 @@
+{
+    "hfsevents": {
+        "branch": "master",
+        "description": "Haskell bindings for the OS X FSEvents API - Event based filesystem monitoring",
+        "homepage": "",
+        "owner": "luite",
+        "repo": "hfsevents",
+        "rev": "25a53d417d7c7a8fc3116b63e3ba14ca7c8f188f",
+        "sha256": "0smpq3yd5m9jd9fpanaqvhadv6qcyp9y5bz0dya0rnxqg909m973",
+        "type": "tarball",
+        "url": "https://github.com/luite/hfsevents/archive/25a53d417d7c7a8fc3116b63e3ba14ca7c8f188f.tar.gz",
+        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
+    },
+    "nixpkgs": {
+        "branch": "release-21.05",
+        "description": "Nix Packages collection",
+        "homepage": "",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "022caabb5f2265ad4006c1fa5b1ebe69fb0c3faf",
+        "sha256": "12q00nbd7fb812zchbcnmdg3pw45qhxm74hgpjmshc2dfmgkjh4n",
+        "type": "tarball",
+        "url": "https://github.com/NixOS/nixpkgs/archive/022caabb5f2265ad4006c1fa5b1ebe69fb0c3faf.tar.gz",
+        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
+    }
+}

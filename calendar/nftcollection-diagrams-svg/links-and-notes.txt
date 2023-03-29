@@ -1,0 +1,5 @@
+https://archives.haskell.org/projects.haskell.org/diagrams/gallery.html (differnt diagram options)
+
+https://archives.haskell.org/projects.haskell.org/diagrams/ (main page diagrams haskell)
+
+https://www.mjoldfield.com/atelier/2020/07/diagrams-haskell.html (tutorial)

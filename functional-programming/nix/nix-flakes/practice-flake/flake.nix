@@ -16,4 +16,5 @@
       '';
     });
   };
+  defaultPackage = myProject;
 }

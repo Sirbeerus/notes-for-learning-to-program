@@ -6,6 +6,8 @@ Artisan::command('ada', function () {
     echo Http::get('https://pool.pm/total.json')->json('ADAUSD');
 });
 
+
+xdg-open
 ------------------------------------------------------------
 --ADD DATE PERSONAL CMD
 
@@ -35,6 +37,14 @@ rm -r (recursive)
 
 mistakes with "find" are safe, unless you use the -delete flag, this is why we always confirm first, delete after
 ---------------------------------------------------------------TERMINAL
+
+You can find out which process is using the port by using the lsof command:
+sudo lsof -i :8080
+
+
+If you want to close the port 8080, you can use the following command:
+sudo fuser -k 8080/tcp
+
 
 ls -la  shows . files
 ls -ltrh  shows file size

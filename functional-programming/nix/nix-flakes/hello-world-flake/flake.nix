@@ -13,13 +13,13 @@
         packages.hello = pkgs.hello;
 
         devShell =
- pkgs.mkShell { 
+ pkgs.mkShell {
    name = "hello-world";
    buildInputs = with pkgs ; [
    hello
    cowsay
    figlet
-  ]; 
+  ];
 
   shellHook = ''
     echo "Welcome to my awesome shell!" | figlet ;
@@ -27,4 +27,5 @@
               };
       });
 }
+
 

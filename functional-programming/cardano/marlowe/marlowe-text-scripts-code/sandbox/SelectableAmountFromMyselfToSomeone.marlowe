@@ -1,0 +1,17 @@
+{-# LANGUAGE OverloadedStrings #-}
+
+module SelectableAmountFromMyselfToSomeone where
+
+import Language.Marlowe.Extended
+
+main :: IO ()
+main = print . pretty $ contract
+
+contract :: Contract
+contract = 
+	When
+		[Case ( Choice ( ChoiceId "amount" "me") [Bound 1 100]) $
+			When
+				[ Case (Deposit "you" "me" ada ( ChoiceValue ( ChoiceId "amount" "me"))) Close] (Slot 60) Close] (Slot 30) Close
+
+		

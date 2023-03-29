@@ -7,7 +7,7 @@ ls -la(shows hidden files)
 ssh -vvv root@1.2.3.4 (packet errors)
 
 
-
+If you are connected to your VPS through SSH, you can also use the Ctrl + D keyboard shortcut to close the connection.
 
 -----------------------------------------------------------------------------
 

@@ -10,8 +10,10 @@ in
 myNixPkgs.mkShell {
   nativeBuildInputs = with myNixPkgs; [
     cabal-install # terminal app cabal
+    stylish-cabal
     ghc # Haskell compiler
     haskell-language-server
+    stylish-haskell
     redis
     ghcid
     haskellPackages.hedis
@@ -23,6 +25,10 @@ myNixPkgs.mkShell {
 --------------------------------
 
 ghcid Main.hs --run
+
+ghcid --warnings=false
+
+ghcup tui 
 
 ---------------------------------
 
@@ -47,6 +53,8 @@ cabal v2-exec -p ghcid
 
 cabal exec ghcid
 
+cabal2nix --shell . > shell.nix
+
 --------------------------------
 
 GHC only knows about packages that are installed. To see which packages are installed, use the ghc-pkg list command:
@@ -62,6 +70,14 @@ ghc-pkg list
 stack exec ghc-pkg -- list
 
 --------------------------------
+
+I can use ghc -O to build an executable to run:
+
+[nix-shell]$ ghc -O Spire.hs
+
+cabal exec bob-mandelbrot -- -w 100 -h 100 -o mandelbrot-diagram.svg
+
+------------------------
 
 --ADDING A PACKAGE TO GHCI
 
@@ -254,7 +270,9 @@ ghci> :t +d (+)
 $ runghc <.hs file> (no .hs , name only)
 
 $ ghc -c SimpleJSON.hs
-
+-- A function that takes the temperature in Fahrenheith and returns it in Celsius
+fToC x = (x - 32) * 5 / 9
+fToC 212  -- 100	
 
 The -c option tells ghc to only generate object code. If we were to omit the -c option, the compiler would attempt to generate a complete executable. That would fail, because we haven't written a main function, which GHC calls to start the execution of a standalone program.
 

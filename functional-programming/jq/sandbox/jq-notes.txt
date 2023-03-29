@@ -282,3 +282,29 @@ jq '.[] | select(.name == "zombiechains" )' demo.json
   "sevenDayShort": "14.8K",
   "shortName": "Zombie Chains"
 }
+
+jq is a command-line tool for processing JSON data. It allows you to filter, transform, and extract data from JSON documents.
+
+Basics:
+
+jq can be used to filter and select specific parts of a JSON document. For example, the command jq '.name' will select the "name" field from a JSON document.
+
+jq also supports more complex filters using a combination of selectors, operators, and functions. For example, jq 'select(.age > 21)' will select all objects in the JSON document with an "age" field greater than 21.
+
+Select:
+
+The select() function is used to filter elements in an array based on a condition.
+
+For example, jq '.[] | select(.age > 21)' will select all objects in an array where the "age" field is greater than 21.
+
+to_entries:
+
+The to_entries function is used to convert an object into an array of key-value pairs.
+
+For example, jq 'to_entries' will convert the JSON object into an array of {key: key, value: value} pairs.
+
+You can use | pipe operator to chain multiple command and filter the output.
+
+For example, cat file.json | jq 'to_entries | .[] | select(.value>21)' will extract key-value pairs where value is greater than 21.
+
+

@@ -1,0 +1,154 @@
+
+
+
+(1)nix proficiency
+
+
+(a) https://scrive.github.io/nix-workshop/index.html (nix-workshop)
+(b) https://wiki.nikiv.dev/package-managers/nix/ (nix resources and links)
+(c) https://github.com/Gabriella439/haskell-nix  (nix and haskell in production)
+
+(d)niv-with-flakes
+
+nix flake new -t github:crazazy/niv-flakes <new-dir>
+
+https://github.com/crazazy/niv-flakes
+
+
+
+(e) nix flakes
+
+https://github.com/input-output-hk/haskell.nix/blob/master/docs/tutorials/getting-started-flakes.md
+
+https://numtide.github.io/devshell/getting_started.html  (devshell)
+nix flake new -t "github:numtide/devshell" project/
+
+https://www.haskellforall.com/2022/08/incrementally-package-haskell-program.html?m=1
+
+-- after adding deps to .cabal file 
+
+cabal2nix --shell . > shell.nix
+
+
+
+e1) nix flake init
+
+e2) vim flake.nix
+
+{
+  inputs = {
+    nixpkgs.url = "github:nixos/nixpkgs";
+    flake-utils.url = "github:numtide/flake-utils";
+  };
+
+  outputs = { self, nixpkgs, flake-utils }:
+    flake-utils.lib.eachDefaultSystem (system:
+      let pkgs = nixpkgs.legacyPackages.${system};
+      in {
+        packages.hello = pkgs.hello;
+
+        devShell = pkgs.mkShell { buildInputs = [ pkgs.hello pkgs.cowsay ]; };
+      });
+}
+
+e3):wq
+
+e4) git add flake.nix
+
+e5) nix develop --impure
+
+(f)
+
+{
+  description = "My Nix application";
+
+  inputs = {
+    nixpkgs.url = "github:nixos/nixpkgs";
+    flake-utils.url = "github:numtide/flake-utils";
+  };
+
+  outputs = { self, nixpkgs, flake-utils }:
+    flake-utils.lib.eachDefaultSystem (system:
+      let pkgs = nixpkgs.legacyPackages.${system};
+      in {
+        packages.hello = pkgs.hello;
+
+        devShell =
+ pkgs.mkShell {
+   name = "hello-world";
+   buildInputs = with pkgs ; [
+   hello
+   cowsay
+   figlet
+  ];
+
+  shellHook = ''
+    echo "Welcome to my awesome shell!" | figlet ;
+  '' ;
+              };
+      });
+}
+
+
+
+nix profile list
+nix shell nixpkgs#cowsay --command cowsay Hi!
+nix shell nixpkgs#hello
+nix shell github:nixos/nixpkgs/nixpkgs-unstable#hello
+git add flake.nix
+nix develop --impure
+
+let system = "aarch64-darwin"; # or whatever system you have
+
+https://blog.ysndr.de/posts/internals/2020-04-10-built-with-nix/#default.nix
+
+https://std.divnix.com/tutorials/hello-world/index.html
+
+https://serokell.io/blog/practical-nix-flakes
+
+https://tonyfinn.com/blog/nix-from-first-principles-flake-edition/nix-8-flakes-and-developer-environments/
+
+https://tonyfinn.com/blog/nix-from-first-principles-flake-edition/
+
+--------------------------------------------------------------------------------------------
+
+----------------------------------------------------------------------------------------------
+
+(2) make (functional) static site 
+
+(a)https://dataswamp.org/~solene/2017-12-16-announcement-cl-yag.html
+
+(a1)https://search.nixos.org/packages?channel=22.11&show=ecl&from=0&size=50&sort=relevance&type=packages&query=Ecl
+
+(a2)https://search.nixos.org/packages?channel=22.11&from=0&size=50&sort=relevance&type=packages&query=sbcl
+
+(b) https://blog.ysndr.de/posts/internals/2020-04-10-built-with-nix/#default.nix
+
+(c) https://ema.srid.ca/start
+
+(c1) https://github.com/EmaApps/emanote
+
+(cA) $ nix-shell --pure
+
+(cB) $ , run
+----------------------------------------------------------------------------------------------
+
+
+
+(3) marlowe env/cli/testnet
+
+--------------------------------------------------------------------------------------------
+
+(4)
+
+# Binary Cache for Haskell.nix  
+nix.binaryCachePublicKeys = [
+  "hydra.iohk.io:f/Ea+s+dFdN+3Y/G+FDgSq+a5NEWhJGzdjvKNGv0/EQ="
+];
+nix.binaryCaches = [
+  "https://cache.iog.io"
+];  
+ 
+
+
+--------------------------------------------------------------------------------------------

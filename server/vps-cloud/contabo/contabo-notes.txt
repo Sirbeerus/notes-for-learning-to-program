@@ -1,0 +1,58 @@
+ssh sirbeerus@84.46.248.127
+ssh -lroot -p22 84.46.248.127
+
+export CARDANO_NODE_SOCKET_PATH="$HOME/cardano/mainnet/db/node.socket"
+
+~/root/git/cardano-node
+./mainnet-node-local/bin/cardano-node-mainnet
+
+/home/root/abundantsolutionsdev/
+http://84.46.248.127:8080
+
+Many commands rely on the environment variable CARDANO_NODE_SOCKET_PATH:
+export CARDANO_NODE_SOCKET_PATH=path/to/db/node.socket
+
+Check that the node is syncing by fetching the current tip. When syncing slot should be increasing.
+cardano-cli query tip --mainnet
+
+https://playground.plutus.iohkdev.io/doc/marlowe/tutorials/index.html
+
+
+------
+
+psql is the PostgreSQL interactive terminal.
+
+What you are trying to do is connect to database without PostgreSQL running in first place.
+
+Follow these steps:
+
+Initialize the database with initdb -D .data
+Start a PostgreSQL server with pg_ctl -D .data -l logfile start
+Make sure it's running pg_ctl -D .data status
+Connect to database with psql -d postgres (by default, postgres database is created)
+At the end, make sure to stop database with pg_ctl -D .data stop when leaving the nix shell.
+
+------
+git clone https://github.com/input-output-hk/marlowe-cardano.git
+
+The backend components are available from the Nix Flake as apps. Note the -- separating the arguments from the command.
+
+$ cd marlowe-cardano
+
+$ nix run .#marlowe-chain-indexer -- --help
+$ nix run .#chainseekd -- --help
+$ nix run .#marlowe-indexer -- --help
+$ nix run .#marlowe-sync -- --help
+$ nix run .#marlowe-history -- --help
+$ nix run .#marlowe-discovery -- --help
+$ nix run .#marlowe-tx -- --help
+$ nix run .#marlowe -- --help
+For convenience, several Cardano tools and other utilities are built and available in the development shell.
+
+$ which cardano-node cardano-cli cardano-address sqitch
+/nix/store/...-cardano-node-exe-cardano-node-.../bin/cardano-node
+/nix/store/...-cardano-cli-exe-cardano-cli-.../bin/cardano-cli
+/nix/store/...-cardano-addresses-cli-exe-cardano-address-.../bin/cardano-address
+/nix/store/...-sqitch-pg-.../bin/sqitch
+
+--------------

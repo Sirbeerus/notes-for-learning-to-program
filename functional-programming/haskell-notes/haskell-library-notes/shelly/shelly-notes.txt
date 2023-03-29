@@ -1,0 +1,440 @@
+Some examples of how to use Shelly include:
+
+Changing directories:
+
+S.cd "path/to/directory"
+
+Running a command and getting its output:
+
+output <- S.run "command" []
+
+Running a command and ignoring its output:
+
+S.run_ "command" []
+
+Running a command and getting its exit code:
+
+exitCode <- S.lastExitCode <$> S.shelly "command" []
+
+Reading the contents of a file:
+
+contents <- S.readfile "path/to/file"
+
+Writing to a file:
+
+S.writefile "path/to/file" "some text"
+
+Copying a file:
+
+S.cp "path/to/source" "path/to/destination"
+
+
+Alternatively, you can use an absolute file path, but you need to make sure to specify the correct path to the tmp directory.
+
+Copy code
+S.cd "/Users/sirbeerus/Dropbox/Mac/Documents/programming/functional-programming/nix/nix-text-scripts-code/sand-castle/app/tmp"
+
+--  S.run_ "cat" ["Main.hs"]
+--  S.cd "/tmp"
+--  S.run_ "ls" []
+
+jq can be used in combination with other command-line tools, such as the Shelly library in Haskell, to perform complex data processing tasks.
+
+Here's an example of how to use jq with the Shelly library to filter and extract data from a JSON file in Haskell:
+
+Copy code
+import Shelly
+
+main = shelly $ do
+  -- read the contents of a JSON file
+  json <- liftIO $ readFile "file.json"
+  -- use jq to filter the JSON data
+  let filteredData = run "jq" ["'.name'"] json
+  -- print the filtered data
+  liftIO $ putStrLn filteredData
+This example uses the readFile function from the System.IO module to read the contents of a JSON file, and then passes that data to the run function from the Shelly library, which runs the jq command with the provided arguments and input data.
+
+Another example could be using shelly to filter json file and save in another file using writefile
+
+Copy code
+import Shelly
+
+main = shelly $ do
+  -- read the contents of a JSON file
+  json <- liftIO $ readFile "file.json"
+  -- use jq to filter the JSON data
+  let filteredData = run "jq" ["'select(.age > 21)'"] json
+  -- save the filtered data to a new file
+  liftIO $ writeFile "filtered.json" filteredData
+In this example, jq is used to filter the data based on a condition and the filtered data is saved to a new file using the writeFile function.
+
+It's important to note that the Shelly library provide an easier way to run shell commands and provide more functionality, but jq can be used alone as well.
+
+&&&&
+
+Here are some examples of useful jq and Shelly commands for parsing JSON data:
+
+Filter and extract a specific field from a JSON file:
+
+Copy code
+
+jq '.fieldname' file.json 
+
+Copy code
+
+import Shelly main = shelly $ do json <- liftIO $ readFile "file.json" let filteredData = run "jq" [".fieldname"] json liftIO $ putStrLn filteredData 
+
+Extract all values from an array of objects:
+
+Copy code
+
+jq '.[].fieldname' file.json 
+
+Copy code
+
+import Shelly main = shelly $ do json <- liftIO $ readFile "file.json" let filteredData = run "jq" [".[].fieldname"] json liftIO $ putStrLn filteredData 
+
+Filter objects based on a condition:
+
+Copy code
+
+jq 'select(.fieldname == "value")' file.json 
+
+Copy code
+
+import Shelly main = shelly $ do json <- liftIO $ readFile "file.json" let filteredData = run "jq" ["select(.fieldname == \"value\")"] json liftIO $ putStrLn filteredData 
+
+Convert JSON object to an array of key-value pairs:
+
+Copy code
+
+jq 'to_entries' file.json 
+
+Copy code
+
+import Shelly main = shelly $ do json <- liftIO $ readFile "file.json" let filteredData = run "jq" ["to_entries"] json liftIO $ putStrLn filteredData 
+
+Calculate the sum of a specific field in an array of objects:
+
+Copy code
+
+jq 'reduce .[] as $item (0; . + $item.fieldname)' file.json 
+
+Copy code
+
+import Shelly main = shelly $ do json <- liftIO $ readFile "file.json" let filteredData = run "jq" ["reduce .[] as $item (0; . + $item.fieldname)"] json liftIO $ putStrLn filteredData 
+
+These are just a few examples of how you can use jq and Shelly to parse and manipulate JSON data. Keep in mind that jq is a powerful tool that can be used to perform a wide variety of data processing tasks, and Shelly library could be used to run shell commands and provide more functionality to your haskell script.
+
+Extract the first element of an array:
+Copy code
+jq '.[0]' file.json
+Copy code
+import Shelly
+
+main = shelly $ do
+  json <- liftIO $ readFile "file.json"
+  let filteredData = run "jq" [".[0]"] json
+  liftIO $ putStrLn filteredData
+
+Extract all values of a specific key in an array of objects:
+Copy code
+jq 'map(.fieldname) | .[]' file.json
+Copy code
+import Shelly
+
+main = shelly $ do
+  json <- liftIO $ readFile "file.json"
+  let filteredData = run "jq" ["map(.fieldname) | .[]"] json
+  liftIO $ putStrLn filteredData
+
+Count the number of objects in an array:
+Copy code
+jq 'length' file.json
+Copy code
+import Shelly
+
+main = shelly $ do
+  json <- liftIO $ readFile "file.json"
+  let filteredData = run "jq" ["length"] json
+  liftIO $ putStrLn filteredData
+
+Group objects in an array by a specific field:
+Copy code
+jq 'group_by(.fieldname) | map({(.[0].fieldname): .})' file.json
+Copy code
+import Shelly
+
+main = shelly $ do
+  json <- liftIO $ readFile "file.json"
+  let filteredData = run "jq" ["group_by(.fieldname) | map({(.[0].fieldname): .})"] json
+  liftIO $ putStrLn filteredData
+
+
+&&&
+
+ Shelly Haskell Commands
+
+
+
+Show me some different haskell shelly advanced commands examples
+
+Here are some examples of advanced commands that can be used with the Haskell Shelly library:
+
+cd and pwd: These commands allow you to change the current working directory and print the current working directory, respectively.
+
+
+
+import Shelly main :: IO () main = shelly $ do liftIO $ putStrLn "Current directory:" pwd >>= liftIO . putStrLn liftIO $ putStrLn "\nChanging directory to /tmp" cd "/tmp" pwd >>= liftIO . putStrLn 
+
+run and run_ : These commands allow you to run shell commands and capture their output.
+
+
+
+import Shelly main :: IO () main = shelly $ do liftIO $ putStrLn "Running 'ls -l'" (exitCode, out, err) <- run "ls" ["-l"] liftIO $ putStrLn out 
+
+find : This command allows you to find files in a given directory.
+
+
+
+import Shelly main :: IO () main = shelly $ do files <- find "." (return . (== ".txt")) liftIO $ mapM_ putStrLn files 
+
+echo : This command allows you to print a given string to the terminal.
+
+
+
+import Shelly main :: IO () main = shelly $ echo "Hello, world!" 
+
+Note: These are just a few examples of the many commands available in the Shelly library. I recommend reading the official documentation for more information and examples.
+
+
+
+Show me some more and different haskell shelly commands and how to use?
+
+Sure! Here are some more examples of commands that can be used with the Haskell Shelly library:
+
+readfile: This command allows you to read the contents of a file.
+
+
+
+import Shelly main :: IO () main = shelly $ do contents <- readfile "example.txt" liftIO $ putStrLn contents 
+
+writefile: This command allows you to write to a file.
+
+
+
+import Shelly main :: IO () main = shelly $ writefile "example.txt" "Hello, world!" 
+
+mkdir: This command allows you to create a directory.
+
+Copy code
+
+import Shelly main :: IO () main = shelly $ mkdir "example" 
+
+rm: This command allows you to remove files or directories.
+
+Copy code
+
+import Shelly main :: IO () main = shelly $ rm "example.txt" 
+
+cp: This command allows you to copy a file or directory.
+
+Copy code
+
+import Shelly main :: IO () main = shelly $ cp "example.txt" "example_copy.txt" 
+
+mv: This command allows you to move or rename a file or directory.
+
+Copy code
+
+import Shelly main :: IO () main = shelly $ mv "example.txt" "example_renamed.txt" 
+
+ls : This command allows you to list the files in a directory.
+
+Copy code
+
+import Shelly main :: IO () main = shelly $ do files <- ls "." liftIO $ mapM_ putStrLn files 
+
+chmod : This command allows you to change the permissions of a file or directory.
+
+Copy code
+
+import Shelly main :: IO () main = shelly $ chmod 0o777 "example.txt" 
+
+All these commands are part of Shelly library, to use them you just have to import Shelly and use them inside shelly block. These are just a few examples of the many commands available in the Shelly library, and can be combined to create more complex shell scripts.
+
+￼￼
+
+Show me how to use with variables? 
+
+In Shelly, you can use variables just like in any other Haskell program. Here's an example of how to use variables with the echo command:
+
+Copy code
+
+import Shelly main :: IO () main = shelly $ do let message = "Hello, world!" echo message 
+
+You can also use variables when passing arguments to other commands, like this example of using variable with cp command:
+
+Copy code
+
+import Shelly main :: IO () main = shelly $ do let srcFile = "example.txt" destFile = "example_copy.txt" cp srcFile destFile 
+
+You can also use variables to store the output of a command, like this example of using variable with run command:
+
+Copy code
+
+import Shelly main :: IO () main = shelly $ do (exitCode, out, err) <- run "ls" ["-l"] liftIO $ putStrLn out 
+
+You can also use set to assign the output of a command to a variable. For example:
+
+Copy code
+
+import Shelly main :: IO () main = shelly $ do setenv "VAR_NAME" =<< (run "command" ["arg1","arg2"]) 
+
+In this way you can use the output of a command as an input for another command, or you can use the output of a command to make decisions in your script.
+
+Keep in mind that, these are just examples of how to use variables in Shelly, and you can use variables in many other ways in your shell scripts.
+
+￼￼
+
+I can use haskell Shelly to start nix-shells and scripts?
+
+Yes, you can use the Haskell Shelly library to start Nix shells and scripts. The nix-shell command is used to start a Nix shell, and you can use the run or run_ function from Shelly to execute the command.
+
+Here's an example of how to start a Nix shell for a specific package:
+
+Copy code
+
+import Shelly main :: IO () main = shelly $ do run_ "nix-shell" ["-p", "my-package"] 
+
+You can also use nix-shell command with a specific .nix file, like this:
+
+Copy code
+
+import Shelly main :: IO () main = shelly $ do run_ "nix-shell" ["my-shell.nix"] 
+
+Additionally, you can use Shelly to run scripts that are defined in a Nix shell by using the run or run_ function inside the Nix shell:
+
+Copy code
+
+import Shelly main :: IO () main = shelly $ do run_ "nix-shell" ["-p", "my-package"] run "my-script" [] 
+
+Keep in mind that, when running a script from within a Nix shell, the script will have access to all the packages and dependencies that are defined in the Nix shell.
+
+Also, you can use nix-build command to build a specific package or script, here is an example:
+
+Copy code
+
+import Shelly main :: IO () main = shelly $ do run_ "nix-build" ["-A", "my-package"] 
+
+You can use Shelly to automate the process of building and testing your Nix packages, and to integrate Nix with other tools in your workflow.
+
+￼￼
+
+What's the difference between run and _run? How would I use with variables
+
+The difference between run and run_ is how they handle the output of the command they run.
+
+run captures the output of the command and returns it as a tuple containing the exit code, standard output and standard error output.
+
+Copy code
+
+(exitCode, out, err) <- run "command" ["arg1", "arg2"] 
+
+run_ runs the command and discards the output. It returns an ExitCode as a result.
+
+Copy code
+
+exitCode <- run_ "command" ["arg1", "arg2"] 
+
+You can use variables when passing arguments to the run and run_ commands just like any other command. Here's an example of using variables with the run command:
+
+Copy code
+
+import Shelly main :: IO () main = shelly $ do let command = "ls" args = ["-l"] (exitCode, out, err) <- run command args liftIO $ putStrLn out 
+
+You can also use variables to store the output of the run command:
+
+Copy code
+
+import Shelly main :: IO () main = shelly $ do let command = "ls" args = ["-l"] (exitCode, out, err) <- run command args let myVariable = out liftIO $ putStrLn myVariable 
+
+You can also use set to assign the output of a command to a variable. For example:
+
+Copy code
+
+import Shelly main :: IO () main = shelly $ do let command = "ls" args = ["-l"] set "myVariable" =<< run command args 
+
+Command and Output
+
+￼￼
+
+Show me different examples using these? Running a command and getting its output: output <- S.run "command" [] Running a command and ignoring its output: S.run_ "command" []
+
+Here are some examples of running a command and getting its output:
+
+Copy code
+
+import System.Process.Typed as S -- Get the output of the 'ls' command output <- S.readProcess "ls" [] putStrLn output -- Get the output of the 'pwd' command output <- S.readProcess "pwd" [] putStrLn output -- Get the output of the 'df -h' command output <- S.readProcess "df" ["-h"] putStrLn output 
+
+And here are some examples of running a command and ignoring its output:
+
+Copy code
+
+import System.Process.Typed as S -- Run the 'touch file.txt' command and ignore the output S.run_ "touch" ["file.txt"] -- Run the 'mkdir my_folder' command and ignore the output S.run_ "mkdir" ["my_folder"] -- Run the 'apt-get update' command and ignore the output S.run_ "apt-get" ["update"] 
+
+Note that in the above examples, the commands used are for linux environment, and the same may or may not work on windows.
+
+￼￼
+
+Show me different examples including how to use with Sh ()
+
+Here are some examples of using the Sh function from the shelly package to run commands and get their output:
+
+Copy code
+
+import Shelly main :: IO () main = do -- Get the output of the 'ls' command output <- run "ls" [] putStrLn output -- Get the output of the 'pwd' command output <- run "pwd" [] putStrLn output -- Get the output of the 'df -h' command output <- run "df" ["-h"] putStrLn output 
+
+And here are some examples of running a command and ignoring its output:
+
+Copy code
+
+import Shelly main :: IO () main = do -- Run the 'touch file.txt' command and ignore the output run_ "touch" ["file.txt"] -- Run the 'mkdir my_folder' command and ignore the output run_ "mkdir" ["my_folder"] -- Run the 'apt-get update' command and ignore the output run_ "apt-get" ["update"] 
+
+In the above examples, the run function is used to run a command and get its output, while the run_ function is used to run a command and ignore its output. The run function returns Text containing the output of the command, so it needs to be converted to String if you want to print it out. The run_ function doesn't return anything, so it can be used if you don't care about the command's output.
+
+As before, note that the commands used in the examples are specific to a Linux environment and may not work on Windows.
+
+￼￼
+
+Make these different and into shelly functions for Mac environment. Using Sh ().show me more examples like this:processBTC :: Sh () processBTC = do output <- S.run "jq" [".data | {name: .name}", "tmp/raw-coincap.json"] S.writefile "tmp/refined.json" output output0 <- S.run "jq" [".data | {priceUsd: .priceUsd}", "tmp/raw-coincap.json"] S.appendfile "tmp/refined.json" output0 processPOOL :: Sh () processPOOL = do output <- S.run "jq" [" {adaUSD: .ADAUSD}", "tmp/raw-pool.json"] S.appendfile "tmp/refined.json" output
+
+2 / 2
+
+Here are some examples of using the shelly package to run commands specific to a Mac environment:
+
+Copy code
+
+import Shelly processBTC :: Sh () processBTC = do output <- run "jq" [".data | {name: .name}", "tmp/raw-coincap.json"] writefile "tmp/refined.json" output output0 <- run "jq" [".data | {priceUsd: .priceUsd}", "tmp/raw-coincap.json"] appendfile "tmp/refined.json" output0 processPOOL :: Sh () processPOOL = do output <- run "jq" [" {adaUSD: .ADAUSD}", "tmp/raw-pool.json"] appendfile "tmp/refined.json" output 
+
+In the above examples, the run function is used to run a command and get its output, and the writefile function is used to write the output to a file and appendfile function is used to append the output to a file.
+
+Here are some more examples:
+
+Copy code
+
+import Shelly processIP :: Sh () processIP = do output <- run "curl" ["ifconfig.co"] writefile "tmp/IP.txt" output processMem :: Sh () processMem = do output <- run "vm_stat" [] writefile "tmp/Mem.txt" output processCPU :: Sh () processCPU = do output <- run "sysctl" ["-n","machdep.cpu.brand_string"] writefile "tmp/CPU.txt" output 
+
+In the above examples, the curl command is used to get the public IP address, vm_stat command is used to get memory usage statistics and sysctl command is used to get the information about the CPU.
+
+Note that the specific commands and options used in these examples may not be available on all Mac systems, and may need to be adjusted depending on the specific system you are using.
+
+
+
+
+
+
+
+
+
+

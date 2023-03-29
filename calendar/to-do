@@ -1,135 +1,693 @@
+{-# LANGUAGE OverloadedStrings, TemplateHaskell, DeriveGeneric #-}
+
+module Main where
+
+import Control.Lens
+import Control.Monad
+import Control.Monad.IO.Class
+import Control.Monad.Trans.Maybe
+import Data.Aeson as A
+import Data.Aeson.Lens
+import Data.List
+import Data.Maybe (fromMaybe)
+import Data.Ord
+import Data.Time 
+import qualified Data.ByteString.Lazy as LBS
+import qualified Data.ByteString.Char8 as BS
+import qualified Data.Text as T
+import qualified Data.Text.IO as DT
+import Data.Text.Encoding
+import Data.Scientific
+import GHC.Generics
+import Network.Curl as C
+import Shelly as S
+import System.Directory
+import System.FilePath
+import System.IO
+import System.Process as PR
+import Text.Read
+import Turtle as TRT
+
+data CurrencyInfo = CurrencyInfo
+  { supply        :: Scientific
+  , circulation   :: Scientific
+  , delegations   :: Scientific
+  , stake         :: Scientific
+  , d             :: Maybe Scientific
+  , k             :: Scientific
+  , adaBTC        :: Scientific
+  , adaUSD        :: Scientific
+  , adaEUR        :: Scientific
+  , adaJPY        :: Scientific
+  , adaGBP        :: Scientific
+  , adaCAD        :: Scientific
+  , adaAUD        :: Scientific
+  , adaBRL        :: Scientific
+  , tokens        :: Scientific
+  , nfts          :: Scientific
+  , nftPolicies   :: Scientific
+  , policies      :: Scientific
+  , load24h       :: Scientific
+  , load1h        :: Scientific
+  , load5m        :: Scientific
+  } deriving (Show, Generic)
+
+instance FromJSON CurrencyInfo where
+  parseJSON = genericParseJSON defaultOptions
+
+-- curl and print with specified fields.
+
+main :: IO ()
+main = do
+  createDirectoryIfMissing True "/tmp"
+  (_, responseBody) <- C.curlGetString "https://pool.pm/total.json" []
+  let responseBodyText = T.pack responseBody
+      outputPath = "tmp/output.json"
+  DT.writeFile outputPath responseBodyText
+
+  -- Parse the JSON data
+  let Just jsonData = A.decode (LBS.fromStrict (encodeUtf8 responseBodyText)) :: Maybe Value
+  -- Extract the adaBTC and adaUSD values
+  let adaBTC = fromMaybe 0 (jsonData ^? key "ADABTC" . _Number)
+      adaUSD = fromMaybe 0 (jsonData ^? key "ADAUSD" . _Number)
+  -- Create a new JSON object with the adaBTC and adaUSD values
+  let newJsonData = object ["ADABTC" A..= adaBTC, "ADAUSD" A..= adaUSD]
+  -- Encode the JSON object and write it to the output file
+  LBS.writeFile outputPath (A.encode newJsonData)
 
 
 
-(1)nix proficiency
+let
+  sources = import ./nix/sources.nix;
+  pkgs = import sources.nixpkgs {};
+in
+with pkgs;
+pkgs.mkShell {
 
+  name = "Pickaxe";
 
-(a) https://scrive.github.io/nix-workshop/index.html (nix-workshop)
-(b) https://wiki.nikiv.dev/package-managers/nix/ (nix resources and links)
-(c) https://github.com/Gabriella439/haskell-nix  (nix and haskell in production)
+  buildInputs = [
 
-(d)niv-with-flakes
-
-nix flake new -t github:crazazy/niv-flakes <new-dir>
-
-https://github.com/crazazy/niv-flakes
-
-
-
-
-
-(e) nix flakes
-
-A) nix flake init
-
-B) vim flake.nix
-
-{
-  inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs";
-    flake-utils.url = "github:numtide/flake-utils";
-  };
-
-  outputs = { self, nixpkgs, flake-utils }:
-    flake-utils.lib.eachDefaultSystem (system:
-      let pkgs = nixpkgs.legacyPackages.${system};
-      in {
-        packages.hello = pkgs.hello;
-
-        devShell = pkgs.mkShell { buildInputs = [ pkgs.hello pkgs.cowsay ]; };
-      });
-}
-
-C):wq
-
-D) git add flake.nix
-
-E) nix develop --impure
-
-B1)
-
-{
-  description = "My Nix application";
-
-  inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs";
-    flake-utils.url = "github:numtide/flake-utils";
-  };
-
-  outputs = { self, nixpkgs, flake-utils }:
-    flake-utils.lib.eachDefaultSystem (system:
-      let pkgs = nixpkgs.legacyPackages.${system};
-      in {
-        packages.hello = pkgs.hello;
-
-        devShell =
- pkgs.mkShell {
-   name = "hello-world";
-   buildInputs = with pkgs ; [
-   hello
-   cowsay
-   figlet
+    cabal-install
+    ghc
+    ghcid
+    hlint
+    haskellPackages.wreq
+    haskellPackages.haskell-language-server
+    haskellPackages.cabal2nix
+    stylish-haskell
+    haskellPackages.hedis
+    haskellPackages.generic-data
+    bash
+    haskellPackages.aeson
+    haskellPackages.lens
+    haskellPackages.zlib
+    vim
+    nixops
+    haskellPackages.redis
+    curl
+    jq
+    haskellPackages.shelly
+    openssl
+    haskellPackages.assoc
+    haskellPackages.ap-normalize
+    haskellPackages.niv
+    redis
+    haskellPackages.HTTP
+    haskellPackages.shelly-extra
+    haskellPackages.turtle
   ];
-
-  shellHook = ''
-    echo "Welcome to my awesome shell!" | figlet ;
-  '' ;
-              };
-      });
 }
 
 
 
-nix profile list
-nix shell nixpkgs#cowsay --command cowsay Hi!
-nix shell nixpkgs#hello
-nix shell github:nixos/nixpkgs/nixpkgs-unstable#hello
-git add flake.nix
-nix develop --impure
 
-let system = "aarch64-darwin"; # or whatever system you have
+cabal-version:      3.0
+name:               sand-castle
+version:            0.1.0.0
+-- synopsis:
+-- description:
+license:            MIT
+license-file:       LICENSE
+author:             N.J. Childs
+maintainer:         sirbeerus@gmail.com
+-- copyright:
+category:           Testing
+build-type:         Simple
+extra-doc-files:    CHANGELOG.md
+-- extra-source-files:
 
-https://blog.ysndr.de/posts/internals/2020-04-10-built-with-nix/#default.nix
+common warnings
+    ghc-options: -Wall
 
-https://std.divnix.com/tutorials/hello-world/index.html
+executable sand-castle
+    import:           warnings
+    main-is:          Main.hs
+    build-depends:
 
-https://serokell.io/blog/practical-nix-flakes
+        base ^>=4.14.1.0 && <4.15,
+        ghc,
+        ghcid,
+        hlint,
+        haskell-language-server ^>=1.7 && <2,
+        cabal2nix,
+        redis,
+        hedis,
+        bash,
+        aeson,
+        wreq >= 0.5,
+        data-aeson-lens >= 0.1,
+        data-aeson >= 0.9,
+        control-lens >= 0.2,
+        generic-data,
+        zlib,
+        curl,
+        lens,
+        text,
+        template-haskell,
+        bytestring,
+        lens-aeson,
+        process,
+        shelly,
+        cabal2nix,
+        http,
+        shelly-extra,
+        turtle,
+        scientific
 
-https://tonyfinn.com/blog/nix-from-first-principles-flake-edition/nix-8-flakes-and-developer-environments/
-
-https://tonyfinn.com/blog/nix-from-first-principles-flake-edition/
-
---------------------------------------------------------------------------------------------
-
-----------------------------------------------------------------------------------------------
-
-(2) make (functional) static site 
-
-(a)https://dataswamp.org/~solene/2017-12-16-announcement-cl-yag.html
-
-(a1)https://search.nixos.org/packages?channel=22.11&show=ecl&from=0&size=50&sort=relevance&type=packages&query=Ecl
-
-(a2)https://search.nixos.org/packages?channel=22.11&from=0&size=50&sort=relevance&type=packages&query=sbcl
-
-(b) https://blog.ysndr.de/posts/internals/2020-04-10-built-with-nix/#default.nix
-----------------------------------------------------------------------------------------------
-
-
-
-(3) marlowe env/cli/testnet
-
---------------------------------------------------------------------------------------------
-
-(4)
-
-# Binary Cache for Haskell.nix  
-nix.binaryCachePublicKeys = [
-  "hydra.iohk.io:f/Ea+s+dFdN+3Y/G+FDgSq+a5NEWhJGzdjvKNGv0/EQ="
-];
-nix.binaryCaches = [
-  "https://cache.iog.io"
-];  
- 
+    hs-source-dirs:   app
+    default-language: Haskell2010
 
 
---------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+----------------------------------------------------------------------
+
+$ simple curl and output in ghci
+
+
+main :: IO ()
+main = do
+  (_, responseBody) <- C.curlGetString "https://api.coingecko.com/api/v3/ping" []
+  putStrLn responseBody
+  
+
+--------------------------------------------------------------------
+
+$ curl and print to file all values
+
+main :: IO ()
+main = do
+  createDirectoryIfMissing True "/tmp"
+  (_, responseBody) <- C.curlGetString "https://pool.pm/total.json" []
+  let outputPath = "tmp/output.json"
+      responseBodyText = T.pack responseBody
+  DT.writeFile outputPath responseBodyText
+
+---------------------------------------------------------------------
+
+-- curl two get responses and append together to a file.
+
+main :: IO ()
+main = do
+  createDirectoryIfMissing True "/tmp"
+  (_, responseBody) <- C.curlGetString "https://pool.pm/total.json" []
+  let outputPath = "tmp/output.json"
+      responseBodyText = T.pack responseBody
+  DT.writeFile outputPath responseBodyText
+
+  (_, responseBody2) <- C.curlGetString "https://api.coingecko.com/api/v3/ping" []
+  let responseBodyText2 = T.pack responseBody2
+  DT.appendFile outputPath responseBodyText2
+
+
+-------------------------------------------------------------------------
+
+-- curl two requests with comments.
+
+main :: IO ()
+main = do
+  createDirectoryIfMissing True "/tmp"
+  (_, responseBody1) <- C.curlGetString "https://api.coingecko.com/api/v3/search/trending" []
+  let outputPath = "tmp/output.json"
+  DT.appendFile outputPath "\n\n-- start of first request --\n"
+  DT.appendFile outputPath (T.pack responseBody1)
+  DT.appendFile outputPath "\n-- end of first request --\n"
+
+  (_, responseBody2) <- C.curlGetString "https://api.coingecko.com/api/v3/ping" []
+  DT.appendFile outputPath "\n\n-- start of second request --\n"
+  DT.appendFile outputPath (T.pack responseBody2)
+  DT.appendFile outputPath "\n-- end of second request --\n"
+
+------------------------------------------------------------------------------
+
+-- shelly curl overwrites file
+
+main :: IO ()
+main = shelly $ do
+  -- Capture the output of the command
+  output <- run "curl" ["--location", "--request", "GET", "api.coincap.io/v2/assets/bitcoin"] 
+  -- Write the output to the file
+  liftIO $ DT.writeFile "tmp/output.json" output
+  liftIO $ putStrLn "Command executed"
+
+------------------------------------------------------------------------------
+
+-- three shelly curls writes to file
+
+
+main :: IO ()
+main = shelly $ do
+  -- Capture the output of the command
+  output0 <- run "curl" ["--location", "--request", "GET", "api.coincap.io/v2/assets/bitcoin"] 
+  -- Write the output to the file
+  liftIO $ DT.writeFile "tmp/output.json" output0
+  liftIO $ putStrLn "-- BITCOIN DATA --"
+
+
+  output1 <- run "curl" ["https://pool.pm/total.json"]
+  -- Write the output to the file
+  liftIO $ DT.appendFile "tmp/output.json" output1
+  liftIO $ putStrLn "-- ADA DENOMINTATIONS --"
+
+
+  output2 <- run "curl" ["--location", "--request", "GET", "https://api.coingecko.com/api/v3/search/trending"]
+  -- Append the output to the file with a comment
+  liftIO $ DT.appendFile "tmp/output.json" output2
+  liftIO $ putStrLn "-- TRENDING COIN DATA --"
+
+-------------------------------------------------------------------------------------
+
+-- three shelly curls writes to file, one parse to new json file.
+
+{-# LANGUAGE OverloadedStrings, TemplateHaskell, DeriveGeneric #-}
+
+module Main where
+
+import Control.Lens
+import Control.Monad
+import Control.Monad.IO.Class
+import Control.Monad.Trans.Maybe
+import Data.Aeson as A
+import Data.Aeson.Lens
+import Data.List
+import Data.Maybe (fromMaybe)
+import Data.Ord
+import Data.Time 
+import qualified Data.ByteString.Lazy as LBS
+import qualified Data.ByteString.Char8 as BS
+import qualified Data.Text as T
+import qualified Data.Text.IO as DT
+import Data.Text.Encoding
+import Data.Scientific
+import GHC.Generics
+import Network.Curl as C
+import Shelly as S
+import System.Directory
+import System.FilePath
+import System.IO
+import System.Process as PR
+import Text.Read
+import Turtle as TRT
+
+data BtcInfo = BtcInfo
+  { id :: String
+  , rank :: String
+  , symbol :: String
+  , name :: String
+  , supplyb :: Scientific
+  , maxSupply :: Scientific
+  , marketCapUsd :: Scientific
+  , volumeUsd24Hr :: Scientific
+  , priceUsd :: Scientific
+  , changePct24Hr :: Scientific
+  , vwap24Hr :: Scientific
+  , explorer :: String
+  , timestamp :: Scientific
+  } deriving (Show, Generic)
+
+instance FromJSON BtcInfo where
+  parseJSON = genericParseJSON defaultOptions  
+
+data CurrencyInfo = CurrencyInfo
+  { supply        :: Scientific
+  , circulation   :: Scientific
+  , delegations   :: Scientific
+  , stake         :: Scientific
+  , d             :: Maybe Scientific
+  , k             :: Scientific
+  , adaBTC        :: Scientific
+  , adaUSD        :: Scientific
+  , adaEUR        :: Scientific
+  , adaJPY        :: Scientific
+  , adaGBP        :: Scientific
+  , adaCAD        :: Scientific
+  , adaAUD        :: Scientific
+  , adaBRL        :: Scientific
+  , tokens        :: Scientific
+  , nfts          :: Scientific
+  , nftPolicies   :: Scientific
+  , policies      :: Scientific
+  , load24h       :: Scientific
+  , load1h        :: Scientific
+  , load5m        :: Scientific
+  } deriving (Show, Generic)
+
+instance FromJSON CurrencyInfo where
+  parseJSON = genericParseJSON defaultOptions
+
+
+
+data GekInfo = GekInfo
+ { idg :: String
+ , coinId :: Scientific
+ , nameg :: String
+ , symbolg :: String
+ , marketCapRank :: Scientific
+ , thumb :: String
+ , small :: String
+ , large :: String
+ , slug :: String
+ , priceBtc :: Scientific
+ , score :: Scientific
+ } deriving (Show, Generic)
+
+instance FromJSON GekInfo where
+ parseJSON = genericParseJSON defaultOptions
+
+
+processDATA :: Sh ()
+processDATA = do
+  -- Read the contents of the file
+  contents <- liftIO $ DT.readFile "tmp/output.json"
+  -- Parse the JSON data
+  let Just jsonData = A.decode (LBS.fromStrict (encodeUtf8 contents)) :: Maybe Value
+  -- Extract the adaBTC and adaUSD values
+  let adaBTC = fromMaybe 0 (jsonData ^? key "ADABTC" . _Number)
+      adaUSD = fromMaybe 0 (jsonData ^? key "ADAUSD" . _Number)
+  -- Create a new JSON object with the adaBTC and adaUSD values
+  let newJsonData = object ["ADABTC" A..= adaBTC, "ADAUSD" A..= adaUSD]
+  -- Encode the JSON object and write it to the lens.json file
+  liftIO $ LBS.writeFile "tmp/lens.json" (A.encode newJsonData)
+
+
+
+main :: IO ()
+main = shelly $ do
+  -- Capture the output of the command
+  output0 <- run "curl" ["--location", "--request", "GET", "api.coincap.io/v2/assets/bitcoin"] 
+  -- Write the output to the file
+  liftIO $ DT.writeFile "tmp/output.json" "["
+  liftIO $ DT.appendFile "tmp/output.json" output0
+  liftIO $ DT.appendFile "tmp/output.json" ","
+  liftIO $ putStrLn "-- BITCOIN DATA --"
+
+  output1 <- run "curl" ["https://pool.pm/total.json"]
+  -- Write the output to the file
+  liftIO $ DT.appendFile "tmp/output.json" output1
+  liftIO $ DT.appendFile "tmp/output.json" ","
+  liftIO $ putStrLn "-- ADA DENOMINTATIONS --"
+
+  output2 <- run "curl" ["--location", "--request", "GET", "https://api.coingecko.com/api/v3/search/trending"]
+  -- Append the output to the file with a comment
+  liftIO $ DT.appendFile "tmp/output.json" output2
+  liftIO $ DT.appendFile "tmp/output.json" "]"
+  liftIO $ putStrLn "-- TRENDING COIN DATA --"
+  processDATA
+
+----------------------------------------------------------------------------------------
+
+
+To start project needed to enter a nix-shell -p ghc niv cabal-install, initialize niv init. then cabal init -i (for interactive). Adjust packages inside .cabal accordingly. niv add <author>/<repo>, cabal install --lib <packakage>.
+
+
+
+{-# LANGUAGE OverloadedStrings, TemplateHaskell, DeriveGeneric #-}
+
+module Main where
+
+-- "priceUsd":"17278.9104965184755695"
+
+import Control.Lens
+import Control.Monad
+import Control.Monad.IO.Class
+import Control.Monad.Trans.Maybe
+import Data.Aeson as A
+import Data.Aeson.Lens
+import Data.List
+import  qualified Data.Maybe as DM
+import Data.Ord
+import Data.Time
+import qualified Data.Vector as V
+import qualified Data.ByteString.Lazy as LBS
+import qualified Data.ByteString.Char8 as BS
+import qualified Data.Text as T
+import qualified Data.Text.IO as DT
+import Data.Text.Encoding
+import Data.Scientific
+import GHC.Generics
+import Network.Curl as C
+import Shelly as S
+import System.Directory
+import System.FilePath
+import System.IO
+import System.Process as PR
+import Text.Read
+import Turtle as TRT
+
+
+
+main :: IO ()
+main = shelly $ do
+    tmpExists <- test_d "tmp"
+    if tmpExists 
+      then do
+        run_ "trash-put" ["tmp/raw.json"]
+        run_ "trash-put" ["tmp/refined.json"]
+        run_ "touch" ["tmp/raw.json"]
+        run_ "touch" ["tmp/refined.json"]
+      else do
+        run_ "mkdir" ["-p", "tmp"]
+        run_ "touch" ["tmp/raw.json"]
+        run_ "touch" ["tmp/refined.json"]
+
+
+  -- Capture the output of the command
+    output0 <- run "curl" ["--location", "--request", "GET", "api.coincap.io/v2/assets/bitcoin"]
+  -- Write the output to the file
+    liftIO $ DT.writeFile "tmp/raw.json" "["
+    liftIO $ DT.appendFile "tmp/raw.json" output0
+    liftIO $ DT.appendFile "tmp/raw.json" ","
+    liftIO $ putStrLn "-- BITCOIN DATA --"
+
+    output1 <- run "curl" ["https://pool.pm/total.json"]
+  -- Write the output to the file
+    liftIO $ DT.appendFile "tmp/raw.json" output1
+    liftIO $ DT.appendFile "tmp/raw.json" ","
+    liftIO $ putStrLn "-- ADA DENOMINTATIONS --"
+
+    output2 <- run "curl" ["--location", "--request", "GET", "https://api.coingecko.com/api/v3/search/trending"]
+  -- Append the output to the file with a comment
+    liftIO $ DT.appendFile "tmp/raw.json" output2
+    liftIO $ DT.appendFile "tmp/raw.json" "]"
+    liftIO $ putStrLn "-- TRENDING COIN DATA --"
+
+
+
+cabal-version:      3.0
+name:               sand-castle
+version:            0.1.0.0
+-- synopsis:
+-- description:
+license:            MIT
+license-file:       LICENSE
+author:             N.J. Childs
+maintainer:         sirbeerus@gmail.com
+-- copyright:
+category:           Testing
+build-type:         Simple
+extra-doc-files:    CHANGELOG.md
+-- extra-source-files:
+
+common warnings
+    ghc-options: -Wall
+
+executable sand-castle
+    import:           warnings
+    main-is:          Main.hs
+    build-depends:
+
+        base ^>=4.14.1.0 && <4.15,
+        ghc,
+        ghcid,
+        hlint,
+        haskell-language-server ^>=1.7 && <2,
+        cabal2nix,
+        redis,
+        hedis,
+        bash,
+        aeson,
+        wreq >= 0.5,
+        data-aeson-lens >= 0.1,
+        data-aeson >= 0.9,
+        control-lens >= 0.2,
+        generic-data,
+        zlib,
+        curl,
+        lens,
+        text,
+        template-haskell,
+        bytestring,
+        lens-aeson,
+        process,
+        shelly,
+        cabal2nix,
+        http,
+        shelly-extra,
+        turtle,
+        scientific
+
+    hs-source-dirs:   app
+    default-language: Haskell2010
+
+
+
+------------------------------------------------------------------
+
+{-# LANGUAGE OverloadedStrings, TemplateHaskell, DeriveGeneric #-}
+
+module Main where
+
+-- "priceUsd":"17278.9104965184755695"
+
+import Control.Lens
+import Control.Monad
+import Control.Monad.IO.Class
+import Control.Monad.Trans.Maybe
+import Data.Aeson as A
+import Data.Aeson.Lens
+import Data.List
+import  qualified Data.Maybe as DM
+import Data.Ord
+import Data.Time
+import qualified Data.Vector as V
+import qualified Data.ByteString.Lazy as LBS
+import qualified Data.ByteString.Char8 as BS
+import qualified Data.Text as T
+import qualified Data.Text.IO as DT
+import Data.Text.Encoding
+import Data.Scientific
+import GHC.Generics
+import Network.Curl as C
+import Shelly as S
+import System.Directory
+import System.FilePath
+import System.IO
+import System.Process as PR
+import Text.Read
+import Turtle as TRT
+
+
+processBTC :: Sh ()
+processBTC = do
+    output <- S.run "jq" [".data.name", "tmp/raw-coincap.json"]
+    S.writefile "tmp/refined.json" output
+
+
+main :: IO ()
+main = shelly $ do
+    tmpExists <- test_d "tmp"
+    if tmpExists 
+      then do
+        rawCoincapExists <- test_f "tmp/raw-coincap.json"
+        when rawCoincapExists $ run_ "trash-put" ["tmp/raw-coincap.json"]
+        rawPoolExists <- test_f "tmp/raw-pool.json"
+        when rawPoolExists $ run_ "trash-put" ["tmp/raw-pool.json"]
+        rawGekExists <- test_f "tmp/raw-gek.json"
+        when rawGekExists $ run_ "trash-put" ["tmp/raw-gek.json"]
+        refinedExists <- test_f "tmp/refined.json"
+        when refinedExists $ run_ "trash-put" ["tmp/refined.json"]
+        run_ "touch" ["tmp/raw-coincap.json"]
+        run_ "touch" ["tmp/raw-pool.json"] 
+        run_ "touch" ["tmp/raw-gek.json"]               
+        run_ "touch" ["tmp/refined.json"]
+      else do
+        run_ "mkdir" ["-p", "tmp"]
+        run_ "touch" ["tmp/raw-coincap.json"]
+        run_ "touch" ["tmp/raw-pool.json"]
+        run_ "touch" ["tmp/raw-gek.json"]        
+        run_ "touch" ["tmp/refined.json"]
+
+    run_ "wait" []
+
+
+   -- Capture the output of the command
+    output0 <- run "curl" ["--location", "--request", "GET", "api.coincap.io/v2/assets/bitcoin"]
+    liftIO $ DT.writeFile "tmp/raw-coincap.json" output0
+    liftIO $ putStrLn "-- COINCAP DATA --"
+
+    run_ "wait" []
+
+   -- Capture the output of the command
+    output1 <- run "curl" ["--location", "--request", "GET", "https://pool.pm/total.json"]
+    liftIO $ DT.writeFile "tmp/raw-pool.json" output1
+    liftIO $ putStrLn "--  POOL DATA --"
+
+    run_ "wait" []
+    --
+
+   -- Capture the output of the command
+    output2 <- run "curl" ["--location", "--request", "GET", "https://api.coingecko.com/api/v3/search/trending"]
+    liftIO $ DT.writeFile "tmp/raw-gek.json" output2
+    liftIO $ putStrLn "-- GEK DATA --"  
+
+    run_ "wait" []
+    processBTC
+--    processPOOL
+--    processGEK
+
+-----------------------------------------------------------------------------
+
+-- Curls from Lib  
+
+module Main where
+
+import qualified PickaxeTomes as PT
+import qualified Shelly as S
+
+{-
+main :: IO ()
+main = S.shelly $ do
+  S.liftIO $ putStrLn "Hello from Main."
+  S.run_ "pwd" []
+  PickaxeTomes.someFunc
+-}
+
+main :: IO ()
+main = S.shelly $ do
+  S.liftIO $ putStrLn "Hello from Main."
+  S.run_ "pwd" []
+  PT.someFunc    
+
+
+&&&&&&&
+
+-- Lib
+
+{-# LANGUAGE OverloadedStrings #-}
+
+module PickaxeTomes (someFunc) where
+
+import qualified Shelly as S
+import qualified Data.Text as T
+
+someFunc :: S.Sh ()
+someFunc = S.run_ "curl" [T.pack "https://api.cnft.tools/lists/all/new"]
+
+------------------------------------------------------------------------------  

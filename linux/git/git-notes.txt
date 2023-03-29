@@ -5,6 +5,11 @@ if you are ready to commit your changes, you would tell git.
 now you still have to push the changes to the remote origin.
 -- " git push "
 
+$ git commit --amend -m "new message"
+$ git commit --amend --no-edit
+
+$ git revert
+
 ---------------------------------------------------------
 
 --github

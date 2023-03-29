@@ -1,16 +1,38 @@
 {
+  description = "My Nix application";
+
   inputs = {
-    haskellPackages = import (builtins.fetchTarball {
-      name = "haskell-packages";
-      url = "https://github.com/NixOS/nixpkgs/tarball/ffc47bdda8d7e3f3f01be7c9f72d70c95a2b2a74";
-      sha256 = "1wj6gf1hry0ik6bvj6pzp6lg34sabzcjc5vn8a7pbd68jdj0nks5";
-    });
+    nixpkgs.url = "github:nixos/nixpkgs";
+    flake-utils.url = "github:numtide/flake-utils";
   };
 
-  outputs = { self, haskellPackages }: {
-    ghc = haskellPackages.ghcWithPackages (self: with self; [
-      self
-      Hello
-    ]);
-  };
+  outputs = { self, nixpkgs, flake-utils }:
+    let
+      pkgs = import <nixpkgs> {};
+      haskellPackages = pkgs.haskellPackages;
+    in
+      flake-utils.lib.eachDefaultSystem (system:
+        let
+          pkgs = nixpkgs.legacyPackages.${system};
+          ghc = haskellPackages.ghcWithPackages (self: with self; [
+            self
+            hello
+          ]);
+        in {
+          devShell =
+            pkgs.mkShell {
+              name = "Hello";
+              buildInputs = with pkgs ; [
+                ghc
+                ghcid
+                bash
+                vim
+              ];
+
+              shellHook = ''
+                echo "Welcome to my awesome shell!";
+              '';
+            };
+        });
 }
+

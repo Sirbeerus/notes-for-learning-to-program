@@ -1,0 +1,114 @@
+{
+  "name": "Bitcoin"
+}
+{
+  "priceUsd": "28203.2203828947389789"
+}
+{
+  "adaUSD": 0.353821
+}
+{
+  "name": "Ardana",
+  "asset_platform_id": "cardano",
+  "price_usd": 0.00366044,
+  "market_change_percentage_30d": -23.4495
+}
+{
+  "name": "ZigZag",
+  "symbol": "ZZ",
+  "market_cap_rank": 598
+}
+{
+  "name": "PlutusDAO",
+  "symbol": "PLS",
+  "market_cap_rank": 892
+}
+{
+  "name": "Magic",
+  "symbol": "MAGIC",
+  "market_cap_rank": 101
+}
+{
+  "name": "GMX",
+  "symbol": "GMX",
+  "market_cap_rank": 71
+}
+{
+  "name": "Radiant Capital",
+  "symbol": "RDNT",
+  "market_cap_rank": 520
+}
+{
+  "name": "inSure DeFi",
+  "symbol": "SURE",
+  "market_cap_rank": 265
+}
+{
+  "name": "Sushi",
+  "symbol": "SUSHI",
+  "market_cap_rank": 177
+}
+{
+  "name": "Arbitrum",
+  "symbol": "ARB",
+  "market_cap_rank": null
+}
+{
+  "fullName": "Viral NFT",
+  "sevenDayVolume": 0,
+  "floorPrice": 5
+}
+{
+  "display_name": "SuperVirus3862",
+  "price": "10000000"
+}
+{
+  "fullName": "Clay Nation",
+  "sevenDayVolume": 43,
+  "floorPrice": 2850
+}
+{
+  "fullName": "Claynation x Good Charlotte",
+  "sevenDayVolume": 30,
+  "floorPrice": 829
+}
+{
+  "fullName": "SpaceBudz",
+  "sevenDayVolume": 27,
+  "floorPrice": 3570
+}
+{
+  "fullName": "Worlds Within",
+  "sevenDayVolume": 1,
+  "floorPrice": 9
+}
+{
+  "fullName": "Zombie Chains",
+  "sevenDayVolume": 9,
+  "floorPrice": 74
+}
+{
+  "fullName": "Zombie Hunters",
+  "sevenDayVolume": 11,
+  "floorPrice": 39
+}
+{
+  "fullName": "Zombits",
+  "sevenDayVolume": 5,
+  "floorPrice": 15
+}
+{
+  "fullName": "Rats Dao",
+  "sevenDayVolume": 14,
+  "floorPrice": 30
+}
+{
+  "fullName": "Aneta Angels",
+  "sevenDayVolume": 27,
+  "floorPrice": 27
+}
+{
+  "fullName": "Deep Vision",
+  "sevenDayVolume": 3,
+  "floorPrice": 8
+}

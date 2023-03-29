@@ -1,0 +1,241 @@
+/Users/sirbeerus/Dropbox/Mac/Documents/programming/functional-programming/nix/nix-text-scripts-code/sand-castle/app
+
+https://dataswamp.org/~solene/2022-01-12-nix-niv-shell.html
+
+(1) make (functional) static site 
+
+
+
+(c) https://ema.srid.ca/start
+
+(c1) https://github.com/EmaApps/emanote
+
+(cA) git clone https://github.com/srid/ema.git
+
+(cB) $ nix-shell --pure
+
+(cC) $ , run
+
+
+
+(dA) nix-shell --pure
+
+(dB) cabal build
+
+(dC) cabal run
+
+(dD) https://github.com/srid/ema
+$ nix run github:EmaApps/emanote -- -L ./docs
+
+
+eA) 
+
+{
+  inputs = {
+    stylus = import (builtins.fetchTarball {
+      url = "https://github.com/stylus/stylus/archive/0.54.7.tar.gz";
+      sha256 = "1j1z0wz6p3p6p7pkp6pjjd7y4z86y4nphcx5x5x5z5wz01nh3z3";
+    });
+  };
+
+  outputs = { self, stylus }: {
+    postBuild = ''
+      # Create a new repository on GitHub
+      curl -u "Sirbeerus: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" https://api.github.com/user/repos -d '{"name":"abundant-solutions-dev","description":"My static site, built with Styx and deployed to GitHub Pages using Nix"}'
+
+      # Set up a shell hook that will automatically deploy the site when you push to the master branch
+      mkdir -p .git/hooks
+      cat > .git/hooks/post-push <<EOF
+#!/usr/bin/env bash
+set -euo pipefail
+
+# Check if we are pushing to the master branch
+if [ "\${1}" = "refs/heads/master" ]; then
+  # Build and deploy the site
+  nix run -f . --command deploy
+fi
+EOF
+      chmod +x .git/hooks/post-push
+    '';
+
+    deploy.target = "gh-pages";
+    deploy.url = "https://Sirbeerus.github.io/abundant-solutions-dev";
+    deploy.token = "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";
+
+    buildInputs = with stylus; [
+      stylus
+    ];
+
+    buildPhase = ''
+      stylus src -o out
+    '';
+  };
+}
+
+---------------------------------------------------
+
+(2)nix proficiency
+
+
+(e) nix flakes
+
+https://github.com/input-output-hk/haskell.nix/blob/master/docs/tutorials/getting-started-flakes.md
+
+https://numtide.github.io/devshell/getting_started.html  (devshell)
+nix flake new -t "github:numtide/devshell" project/
+
+https://www.haskellforall.com/2022/08/incrementally-package-haskell-program.html?m=1
+
+-- after adding deps to .cabal file 
+
+cabal2nix --shell . > shell.nix
+
+
+
+e1) nix flake init
+
+e2) vim flake.nix
+
+{
+  inputs = {
+    nixpkgs.url = "github:nixos/nixpkgs";
+    flake-utils.url = "github:numtide/flake-utils";
+  };
+
+  outputs = { self, nixpkgs, flake-utils }:
+    flake-utils.lib.eachDefaultSystem (system:
+      let pkgs = nixpkgs.legacyPackages.${system};
+      in {
+        packages.hello = pkgs.hello;
+
+        devShell = pkgs.mkShell { buildInputs = [ pkgs.hello pkgs.cowsay ]; };
+      });
+}
+
+e3):wq
+
+e4) git add flake.nix
+
+e5) nix develop --impure
+
+(f)
+
+{
+  description = "My Nix application";
+
+  inputs = {
+    nixpkgs.url = "github:nixos/nixpkgs";
+    flake-utils.url = "github:numtide/flake-utils";
+  };
+
+  outputs = { self, nixpkgs, flake-utils }:
+    flake-utils.lib.eachDefaultSystem (system:
+      let pkgs = nixpkgs.legacyPackages.${system};
+      in {
+        packages.hello = pkgs.hello;
+
+        devShell =
+ pkgs.mkShell {
+   name = "hello-world";
+   buildInputs = with pkgs ; [
+   hello
+   cowsay
+   figlet
+  ];
+
+  shellHook = ''
+    echo "Welcome to my awesome shell!" | figlet ;
+  '' ;
+              };
+      });
+}
+
+
+
+nix profile list
+nix shell nixpkgs#cowsay --command cowsay Hi!
+nix shell nixpkgs#hello
+nix shell github:nixos/nixpkgs/nixpkgs-unstable#hello
+git add flake.nix
+nix develop --impure
+
+let system = "aarch64-darwin"; # or whatever system you have
+
+https://blog.ysndr.de/posts/internals/2020-04-10-built-with-nix/#default.nix
+
+https://std.divnix.com/tutorials/hello-world/index.html
+
+https://serokell.io/blog/practical-nix-flakes
+
+https://tonyfinn.com/blog/nix-from-first-principles-flake-edition/nix-8-flakes-and-developer-environments/
+
+https://tonyfinn.com/blog/nix-from-first-principles-flake-edition/
+
+
+--------------------------------------------------------------------------------------
+
+(3) marlowe env/cli/testnet
+
+
+git clone https://github.com/input-output-hk/cardano-marlowe.git
+
+nix build .#marlowe.haskell.packages.marlowe.components.library
+
+--------------------------------------------------------------------------------------
+(4) the standard nix flakes
+$ nix-env -i standard
+$ nix-shell -p standard
+
+https://github.com/divnix/std/tree/main/docs%2Ftutorials%2Fhello-world
+
+The Standard framework provides a number of commands that you can use to create and manage flakes. Here is a list of some of the most common commands:
+
+standard-init: This command is used to create a new flake. It creates a basic flake definition and directory structure, and can be used to initialize a new flake in an empty directory.
+
+standard-flake2nix: This command converts a flake definition to a traditional Nix expression. This can be useful if you want to use the flake with tools or libraries that do not support flakes directly.
+
+standard-build: This command builds all of the packages in a flake. It takes a flake definition as input and produces a set of built packages as output.
+
+standard-test: This command runs the tests for all of the packages in a flake. It takes a flake definition as input and runs the tests for each package in the flake.
+
+standard-shell: This command opens a Nix shell for a specific package in a flake. It takes a package name and a flake definition as input and opens a shell with the package and its dependencies available for development.
+
+standard-release: This command releases a new version of a flake. It takes a flake definition and a version number as input and publishes the flake to a remote repository.
+
+--------------------------------------------------------------------------------------
+(5)
+
+https://input-output-hk.github.io/haskell.nix/tutorials/getting-started-hix.html
+
+Installing Hix
+To use the other Hix features first install Hix with:
+
+$ git clone https://github.com/tek/hix.git
+
+$ nix-build flake.nix
+
+$ nix run "github:input-output-hk/haskell.nix#hix" -- init
+
+sirbeerus@Nicholass-MacBook-Air nix % cd nix
+sirbeerus@Nicholass-MacBook-Air nix % ls
+hix.nix
+sirbeerus@Nicholass-MacBook-Air nix % cat hix.nix 
+{pkgs, ...}: {
+  # name = "project-name";
+  compiler-nix-name = "ghc8107"; # Version of GHC to use
+
+  # Cross compilation support:
+  # crossPlatforms = p: pkgs.lib.optionals pkgs.stdenv.hostPlatform.isx86_64 ([
+  #   p.mingwW64
+  #   p.ghcjs
+  # ] ++ pkgs.lib.optionals pkgs.stdenv.hostPlatform.isLinux [
+  #   p.musl64
+  # ]);
+
+  # Tools to include in the development shell
+  shell.tools.cabal = "latest";
+  # shell.tools.hlint = "latest";
+  # shell.tools.haskell-language-server = "latest";
+}
+
+nix run .#hello:exe:hello
