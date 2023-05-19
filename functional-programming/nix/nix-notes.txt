@@ -252,7 +252,7 @@ You can use the.   $ ufw status command       to view the current status and lis
 
 Postgresql
 
-Initialize the database with initdb -D .data
+Initialize the database with initdb -D .data --no-locale
 Start a PostgreSQL server with pg_ctl -D .data -l logfile start
 Make sure it's running pg_ctl -D .data status
 Connect to database with psql -d postgres (by default, postgres database is created)
